@@ -3,7 +3,7 @@ export const OptionsMenu = [
         id:1,
         label: "Accueil",
         icon:"/home.png",
-        path:"/"
+        path:"/home"
     },
     { 
         id: 2, 
