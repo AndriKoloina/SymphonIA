@@ -24,6 +24,16 @@
   }
 }
 
+nextjs-portal,
+#vercel-toolbar-container,
+[data-vercel-toolbar],
+.__vercel_toolbar {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 body {
   background: #17083F;
   color: var(--foreground);
