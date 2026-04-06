@@ -31,7 +31,10 @@ export default function LoginForm() {
         
         <form className="flex flex-col items-center">
           <img src="/symphonia-logo.png" className="w-16 h-auto mb-4" alt="Logo" />
-          <h2 className="text-3xl font-bold  text-white mb-8">SymphonIA</h2>
+          <span className="text-lg font-bold tracking-[0.2em] uppercase text-white/90 font-sans italic">
+            Symphon<span className="text-purple-500">ia</span>
+          </span>
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent mt-1 opacity-50"></div>
           <div className="w-full space-y-2">
             <Input 
                 label="Email" 
@@ -44,7 +47,7 @@ export default function LoginForm() {
                 required
             />
           </div>
-          <button className="mt-8 w-auto p-6 bg-[#8A2BE2] hover:bg-purple-500 text-white font-bold py-3 rounded-lg transition-all">
+          <button className="mt-8 w-auto p-6 bg-[#8A2BE2] font-bold hover:bg-purple-500  text-white  py-3 rounded-lg transition-all text-xs">
             Se connecter
           </button>
         </form>
