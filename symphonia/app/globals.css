@@ -34,6 +34,7 @@ nextjs-portal,
   pointer-events: none !important;
 }
 
+
 body {
   background: #17083F;
   color: var(--foreground);
