@@ -8,6 +8,7 @@
   --background-side-bar: #1B2945;
   --color-button: #8A2BE2;
   --color-button-side-bar: #6F6CE0;
+  --color-falling-barre : #FF0098;
 }
 
 @theme inline {
@@ -34,6 +35,23 @@ nextjs-portal,
   pointer-events: none !important;
 }
 
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(256px); 
+    opacity: 1;
+  }
+}
+
+.animate-fall {
+  animation: fall 3s linear forwards;
+}
 
 body {
   background: #17083F;
