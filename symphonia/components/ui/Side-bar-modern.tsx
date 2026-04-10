@@ -9,7 +9,7 @@ export default function SymphoniaSidebar() {
 
   const menuItems = OptionsMenu
   return (
-    <aside className="flex flex-col w-75 h-[98vh] m-2 bg-[#1B2945] rounded-[1rem] pr-4 pl-0 py-4 border border-white/5 shadow-2xl font-sans overflow-hidden absolute"> 
+    <aside className="flex flex-col w-75 h-[98vh] m-2  bg-[#1B2945] rounded-[1rem] pr-4 pl-0 py-4 border border-white/5 shadow-2xl font-sans overflow-hidden absolute"> 
       <div className="flex flex-col items-center justify-center w-full mb-8 mt-2">
           <div className="relative w-14 h-14 mb-2">
             <img 
@@ -73,7 +73,7 @@ export default function SymphoniaSidebar() {
                       className={`cursor-pointer py-2 px-3 rounded-tr-xl rounded-br-xl transition-all duration-300 font-medium text-xs tracking-wider 
                         ${isHighlighted 
                           ? 'bg-[var(--color-button)]/50 text-white translate-x-1 font-bold' 
-                          : 'text-white/80'}`}
+                          : 'text-white/80 font-bold'}`}
                     >
                       {item.label} 
                     </li>
