@@ -3,7 +3,7 @@ import type { StatCardProps } from "@/types/play_interface"
 
 interface StatCard extends StatCardProps {}
 
-export default function StatCard({ title, value, subtext, icon: Icon, colorClass } : StatCard) {
+export default function StatCard({ title, value,  icon: Icon, colorClass } : StatCard) {
 
     return(
        <div className="flex w-full max-w-[240px] mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">

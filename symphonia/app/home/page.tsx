@@ -1,14 +1,22 @@
+'use client';
+
 import UserProfile from "@/components/auth/userprofil/page"
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern"
 import StatCard from "@/components/ui/StatCards"
 import { TitlePage } from "@/components/ui/TitlePage"
 import { title } from "process"
+import { 
+  DocumentMagnifyingGlassIcon, 
+  MusicalNoteIcon, 
+  ClockIcon, 
+  CpuChipIcon 
+} from "@heroicons/react/24/outline";
 
 export default function HomePage() {
 
   const profileData = {
-  profilePicture: "/profile.jpg",
-  username: "Koloina",
+  profilePicture: "/user.png",
+  username: "Klwnn",
   email: "koloina@example.com"
   }
 
@@ -17,28 +25,28 @@ export default function HomePage() {
       id: 1,
       title: "Scans réalisés",
       value: 24,
-      icon: "/partition.png",
+      icon: DocumentMagnifyingGlassIcon,
       colorClass: "bg-indigo-600"
     },
     {
       id: 2,
       title: "Projets musicaux",
       value: 24,
-      icon:"/music.png",
+      icon:MusicalNoteIcon,
       colorClass: "bg-blue-600"
     },
     {
       id: 3,
       title: "Temps d'activité",
       value: `${24} heures`,
-      icon: "/clock.png",
+      icon: ClockIcon,
       colorClass: "bg-emerald-600" 
     },
     {
       id: 4,
       title: "Instrument",
       value: "Piano",
-      icon: "/instrument.png",
+      icon: CpuChipIcon,
       colorClass: "bg-amber-500"
     }
   ]
