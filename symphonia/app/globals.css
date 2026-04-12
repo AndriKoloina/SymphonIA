@@ -53,6 +53,16 @@ nextjs-portal,
   animation: fall 3s linear forwards;
 }
 
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
 body {
   background: #17083F;
   color: var(--foreground);

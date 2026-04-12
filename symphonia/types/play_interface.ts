@@ -24,7 +24,17 @@ export interface UserProfileProps {
 
 export interface SongCardProps {
     title: string
-    coverImage: string
     duration: string
     onPlay: () => void
+    dateCreated: string
+}
+
+export interface SearchBarProps {
+  placeholder?: string
+  onChange?: (value: string) => void
+}
+
+export interface ScrollSectionPage {
+    title : string
+    children: React.ReactNode
 }
