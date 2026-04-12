@@ -15,7 +15,7 @@ export const OptionsMenu = [
         id: 3, 
         label: 'Bibliothèque', 
         icon: '/bibliotheque.png', 
-        path:"/"
+        path:"/library"
     },
     { 
         id: 4, 
