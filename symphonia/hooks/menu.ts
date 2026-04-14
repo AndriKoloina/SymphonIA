@@ -21,7 +21,7 @@ export const OptionsMenu = [
         id: 4, 
         label: 'Studio', 
         icon: '/studio.png' ,
-        path:"/"
+        path:"/studio"
     },
     { 
         id: 5, 

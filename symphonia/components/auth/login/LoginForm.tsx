@@ -17,7 +17,7 @@ export default function LoginForm() {
         setError(null)
 
         try{
-             await new Promise ((res) => setTimeout(res, 5000))
+             await new Promise ((res) => setTimeout(res, 500))
              console.log("connexion avec: ", formData)
              console.log("redirection vers la page d'accueil")
              router.push("/home")

@@ -3,7 +3,7 @@ import { instruments } from "@/hooks/instrument";
 export default function InstrumentCard() {
   return (
     // "grid-cols-1" pour mobile, "md:grid-cols-2" pour tablette, "lg:grid-cols-3" pour desktop
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-1">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 " >
       {instruments.map((inst, index) => (
         <div
           key={inst.id || index}

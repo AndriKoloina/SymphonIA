@@ -29,12 +29,12 @@ export default function SymphoniaSidebar() {
         <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent mt-1 opacity-50"></div>
       </div>
 
-      <div className="flex flex-1 gap-3 mb-6 items-center">
+      <div className="flex flex-1 gap-3 mb-6 items-center ">
         <div
-          className="relative w-22 h-3/4 shadow-xl overflow-hidden"
+          className="relative w-22 h-full shadow-xl overflow-hidden"
           style={{ clipPath: "polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%)" }}
         >
-          <div className="absolute inset-0 bg-[var(--color-side-bar-1)] flex flex-col items-center py-16 pl-6">
+          <div className="absolute inset-0 bg-[var(--color-side-bar-1)] flex flex-col items-center pt-8 pl-6 ">
             <div className="flex flex-col items-center space-y-[0.9rem] w-full relative z-10">
               {menuItems.map((item) => {
                 const isHighlighted =
@@ -59,10 +59,10 @@ export default function SymphoniaSidebar() {
         </div>
 
         <div
-          className="relative flex-1 h-3/4 shadow-xl overflow-hidden"
+          className="relative flex-1 h-full shadow-xl overflow-hidden"
           style={{ clipPath: "polygon(0% 10%, 100% 0%, 100% 100%, 0% 90%)" }}
         >
-          <div className="absolute inset-0 bg-[var(--color-side-bar-2)] rounded-3xl p-8 ml-[-2.1rem]">
+          <div className="absolute inset-0 bg-[var(--color-side-bar-2)] rounded-3xl pt-1 px-8 ml-[-2.1rem]">
             <div className="relative z-10 flex flex-col w-full h-full justify-center">
               <ul className="space-y-[0.8rem]">
                 {menuItems.map((item) => {
