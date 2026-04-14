@@ -27,7 +27,7 @@ export const OptionsMenu = [
         id: 5, 
         label: 'Instrument', 
         icon: '/instrument.png',
-        path:"/"
+        path:"/instrument"
  }
 ]
 

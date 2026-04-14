@@ -34,18 +34,20 @@ const data = [
       }}
     >
       <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false}/>
-      <XAxis dataKey="mois" stroke="var(--color-text-4)" />
+      <XAxis dataKey="mois" stroke="var(--color-text-4)"    tick={{ fontSize: 14 }}/>
       <YAxis width="auto" stroke="var(--color-text-3)" />
       <Tooltip
         cursor={{
           stroke: 'var(--color-border-3)',
         }}
+
         contentStyle={{
           backgroundColor: 'var(--color-surface-raised)',
           borderColor: 'var(--color-border-2)',
+          fontSize:14
         }}
       />
-      <Legend />
+      <Legend  wrapperStyle={{fontSize:14}}/>
       <Line
         type="monotone"
         dataKey="frequence"
@@ -58,6 +60,7 @@ const data = [
       <Line
         type="monotone"
         dataKey="mois"
+        
         stroke="#3b82f6"
         dot={{
           fill: '#fff',
