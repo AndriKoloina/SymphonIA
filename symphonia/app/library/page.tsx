@@ -5,7 +5,7 @@ import SymphoniaSidebar from "@/components/ui/Side-bar-modern"
 import { TitlePage } from "@/components/ui/TitlePage"
 import SearchBar from "@/components/ui/search-bar-modern"
 import AudioPlayer from "@/components/ui/LecteurSon"
-import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
+// import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
 
 export default function LibraryPage() {
@@ -93,7 +93,7 @@ export default function LibraryPage() {
 
       
         <div className="w-[37rem] bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-5 mb-12 shadow-xl">
-          <ScrollSectionnal title="Mes Scans Récents">
+          {/* <ScrollSectionnal title="Mes Scans Récents">
           {mesSons.map(item => (
             <SongCardCreated 
               key={item.id} 
@@ -103,7 +103,7 @@ export default function LibraryPage() {
               onPlay={() => setActiveTrack(item)}
             />
           ))}
-        </ScrollSectionnal>
+        </ScrollSectionnal> */}
         </div>
 
         <AudioPlayer
