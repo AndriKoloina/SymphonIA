@@ -4,14 +4,14 @@ export default function StatisticCard(){
 const data = [
   { mois: 'Jan', frequence: 45 },
   { mois: 'Fév', frequence: 52 },
-  { mois: 'Mar', frequence: 38 },
+  { mois: 'Mar', frequence: 10 },
   { mois: 'Avr', frequence: 65 },
   { mois: 'Mai', frequence: 48 },
-  { mois: 'Juin', frequence: 70 },
+  { mois: 'Juin', frequence: 20 },
   { mois: 'Juil', frequence: 55 },
   { mois: 'Août', frequence: 60 },
   { mois: 'Sep', frequence: 50 },
-    { mois: 'Oct', frequence: 68 },
+    { mois: 'Oct', frequence: 35 },
     { mois: 'Nov', frequence: 58 },
     { mois: 'Déc', frequence: 72 },
 ];

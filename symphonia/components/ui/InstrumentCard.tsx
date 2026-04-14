@@ -3,24 +3,31 @@ import { instruments } from "@/hooks/instrument";
 export default function InstrumentCard() {
   return (
     // "grid-cols-1" pour mobile, "md:grid-cols-2" pour tablette, "lg:grid-cols-3" pour desktop
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 " >
-      {instruments.map((inst, index) => (
-        <div
-          key={inst.id || index}
-          className="relative h-40 rounded-xl overflow-hidden bg-neutral-primary-soft border border-default group cursor-pointer"
-        >
-          <img
-            src={inst.image}
-            className="absolute inset-0 object-cover w-full h-full transition-transform group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-3 transition-opacity">
-            <h5 className="text-white text-sm font-bold">{inst.name}</h5>
-            <p className="hidden group-hover:block text-white/90 text-[10px] mt-1 line-clamp-2">
-              {inst.description}
-            </p>
-          </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+  {instruments.map((inst, index) => (
+    <div 
+      key={inst.id || index}
+      className="p-[1px] rounded-xl bg-gradient-to-br from-purple-600 via-transparent to-pink-500 hover:from-purple-400 hover:to-pink-400 transition-all duration-300 shadow-lg"
+    >
+      <div
+        className="relative h-40 rounded-[inherit] overflow-hidden bg-neutral-primary-soft group cursor-pointer"
+      >
+        <img
+          src={inst.image}
+          className="absolute inset-0 object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+          alt={inst.name}
+        />
+        
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4">
+          <h5 className="text-white text-sm font-bold tracking-wide">{inst.name}</h5>
+          
+          <p className="max-h-0 opacity-0 group-hover:max-h-20 group-hover:opacity-100 transition-all duration-500 text-white/80 text-[10px] mt-2 line-clamp-2 ease-in-out">
+            {inst.description}
+          </p>
         </div>
-      ))}
+      </div>
     </div>
+  ))}
+</div>
   );
 }
