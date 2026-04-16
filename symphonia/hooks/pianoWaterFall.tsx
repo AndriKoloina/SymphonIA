@@ -21,4 +21,3 @@ export default function PianoWaterFall({ activeNotes, totalWidth, width }: { act
     </div>
   )
 }
-  

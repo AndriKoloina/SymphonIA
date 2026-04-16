@@ -159,20 +159,6 @@ export default function LibraryPage() {
       </div>
     </div>
   </div>
-
-  {/* <div className="flex-1 w-5 border-l border-gray-100 dark:border-gray-800/50 pl-12"> 
-    <VerticalSection title="Mes partitions scannées">
-      {scansData.map(item => (
-        <SongCardScanned
-          key={item.id}
-          title={item.title}
-          duration={item.duration}
-          dateCreated={item.dateCreated}
-          onPlay={() => setActiveTrack(item)}
-        />
-      ))}
-    </VerticalSection>
-  </div> */}
 </div>
   
         

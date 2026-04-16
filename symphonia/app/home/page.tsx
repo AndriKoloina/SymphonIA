@@ -11,6 +11,7 @@ import {
   ClockIcon, 
   CpuChipIcon 
 } from "@heroicons/react/24/outline";
+import StatisticCard from "@/components/ui/StatisticCard";
 
 export default function HomePage() {
 
@@ -74,6 +75,10 @@ export default function HomePage() {
                 colorClass = {card.colorClass}
               />
             ))}
+        </div>
+        <div  className="top- left-0 mt-4 rounded-xl">
+          <h1 className="text-l font-bold mb-4">Fréquence d'utilisation</h1>
+          <StatisticCard/>
         </div>
       </main>
       
