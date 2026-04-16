@@ -7,11 +7,61 @@ import SearchBar from "@/components/ui/search-bar-modern"
 import AudioPlayer from "@/components/ui/LecteurSon"
 import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
+import SongCardScanned from '@/components/ui/songCardScanned'
+import { VerticalSection } from "@/components/ui/scrollVertical"
 
 export default function LibraryPage() {
-  // 1. Tes données (on peut imaginer deux listes séparées plus tard)
   const mesSons = [
     {
+      id: 1,
+      title: "Analyse Mélodique #1",
+      duration: "3:45",
+      dateCreated: "2024-06-15"
+    },
+    {
+      id: 2,
+      title: "Composition IA #2",
+      duration: "2:30",
+      dateCreated: "2024-06-16"
+    },
+    {
+      id: 3,
+      title: "Analyse Mélodique #1",
+      duration: "3:45",
+      dateCreated: "2024-06-15"
+    },
+    {
+      id: 4,
+      title: "Composition IA #2",
+      duration: "2:30",
+      dateCreated: "2024-06-16"
+    },{
+      id: 5,
+      title: "Analyse Mélodique #1", 
+      duration: "3:45",
+      dateCreated: "2024-06-15"
+    },
+    {
+      id: 6,
+      title: "Composition IA #2",
+      duration: "2:30",
+      dateCreated: "2024-06-16"
+    },{
+      id: 7,
+      title: "Analyse Mélodique #1", 
+      duration: "3:45",
+      dateCreated: "2024-06-15"
+    },
+    {
+      id: 8,
+      title: "Composition IA #2",
+      duration: "2:30",
+      dateCreated: "2024-06-16"
+    }
+  ]
+
+  const scansData = [
+      {
       id: 1,
       title: "Analyse Mélodique #1",
       duration: "3:45",
@@ -62,7 +112,7 @@ export default function LibraryPage() {
   const [activeTrack, setActiveTrack] = useState(mesSons[0])
 
   return (
-    <div className="flex min-h-screen overflow-hidden">
+    <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
       
       <main className="flex-1 ml-80 p-8 pb-32">
@@ -74,37 +124,71 @@ export default function LibraryPage() {
           </div>
         </div>
 
-        <div className="relative pl-8 py-4 mb-12 group">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.3)]" />
-          
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight transition-colors">
-            {activeTrack.title}
-          </h1>
-          
-          <div className="flex items-center mt-2 text-gray-500 dark:text-gray-400">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-70">
-              Enregistré le :
-            </span>
-            <p className="ml-3 px-2 py-0.5 rounded font-mono text-xs font-bold text-pink-500 bg-pink-500/10 border border-pink-500/20">
-              {activeTrack.dateCreated}
-            </p>
-          </div>
-        </div>
-
+        <div className="flex items-start gap-12">
+  <div className="sticky top-0 w-[300px] flex-shrink-0 pt-4">
+    <div className="relative pl-8 py-4 group">
+      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
       
-        <div className="w-[37rem] bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-5 mb-12 shadow-xl">
-          <ScrollSectionnal title="Mes Scans Récents">
-          {mesSons.map(item => (
-            <SongCardCreated 
-              key={item.id} 
-              title={item.title}
-              duration={item.duration}
-              dateCreated={item.dateCreated}
-              onPlay={() => setActiveTrack(item)}
-            />
-          ))}
-        </ScrollSectionnal>
+      <span className="text-[10px] font-black uppercase text-purple-500 tracking-[0.3em] mb-2 block">
+        Lecture en cours
+      </span>
+      
+      <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-tight mb-4 break-words">
+        {activeTrack.title}
+      </h1>
+      
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center text-gray-500 dark:text-gray-400">
+          <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+            Enregistré le :
+          </span>
+          <p className="ml-3 px-2 py-0.5 rounded font-mono text-[11px] font-bold text-pink-500 bg-pink-500/10 border border-pink-500/20">
+            {activeTrack.dateCreated}
+          </p>
         </div>
+        
+    
+        <div className="flex items-center text-gray-500 dark:text-gray-400">
+          <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+            Durée :
+          </span>
+          <p className="ml-3 font-mono text-[11px] font-bold dark:text-gray-300">
+            {activeTrack.duration}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* <div className="flex-1 w-5 border-l border-gray-100 dark:border-gray-800/50 pl-12"> 
+    <VerticalSection title="Mes partitions scannées">
+      {scansData.map(item => (
+        <SongCardScanned
+          key={item.id}
+          title={item.title}
+          duration={item.duration}
+          dateCreated={item.dateCreated}
+          onPlay={() => setActiveTrack(item)}
+        />
+      ))}
+    </VerticalSection>
+  </div> */}
+</div>
+  
+        
+  <div className="w-[37rem] flex-shrink-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-6 shadow-xl">
+    <ScrollSectionnal title="Mes créations">
+      {mesSons.map(item => (
+        <SongCardCreated 
+          key={item.id} 
+          title={item.title}
+          duration={item.duration}
+          dateCreated={item.dateCreated}
+          onPlay={() => setActiveTrack(item)}
+        />
+      ))}
+    </ScrollSectionnal>
+  </div>
 
         <AudioPlayer
           title={activeTrack.title}

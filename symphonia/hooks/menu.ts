@@ -1,32 +1,40 @@
+import { 
+  HomeIcon, 
+  DocumentMagnifyingGlassIcon, 
+  RectangleStackIcon, 
+  MicrophoneIcon, 
+  CpuChipIcon,
+} from "@heroicons/react/24/outline";
+
 export const OptionsMenu = [
     {
         id:1,
         label: "Accueil",
-        icon:"/home.png",
+        icon: HomeIcon,
         path:"/home"
     },
     { 
         id: 2, 
         label: 'Scanner', 
-        icon: "/scanner.png",
-        path:"/"
+        icon: DocumentMagnifyingGlassIcon,
+        path:"/scanner"
     },
     { 
         id: 3, 
         label: 'Bibliothèque', 
-        icon: '/bibliotheque.png', 
+        icon: RectangleStackIcon, 
         path:"/library"
     },
     { 
         id: 4, 
         label: 'Studio', 
-        icon: '/studio.png' ,
+        icon: MicrophoneIcon ,
         path:"/"
     },
     { 
         id: 5, 
         label: 'Instrument', 
-        icon: '/instrument.png',
+        icon: CpuChipIcon,
         path:"/"
  }
 ]
