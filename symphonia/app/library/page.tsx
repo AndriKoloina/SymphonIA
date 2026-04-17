@@ -114,10 +114,8 @@ export default function LibraryPage() {
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
-      
-      <main className="flex-1 ml-80 p-8 pb-32">
-  
-        <div className="flex items-center justify-between mb-10 gap-8">
+      <main className="flex-1 ml-80 p-4 ">
+        <div className="flex items-center justify-between  gap-8">
           <TitlePage title="Bibliothèque" />
           <div className="flex-1 max-w-xl">
             <SearchBar placeholder="Rechercher dans votre bibliothèque..." />
@@ -145,24 +143,25 @@ export default function LibraryPage() {
           <p className="ml-3 px-2 py-0.5 rounded font-mono text-[11px] font-bold text-pink-500 bg-pink-500/10 border border-pink-500/20">
             {activeTrack.dateCreated}
           </p>
+
+              <div className="flex items-center text-gray-500 dark:text-gray-400 ml-5">
+              <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+                Durée :
+              </span>
+              <p className="ml-3 font-mono text-[11px] font-bold dark:text-gray-300">
+                {activeTrack.duration}
+              </p>
+            </div>
         </div>
         
-    
-        <div className="flex items-center text-gray-500 dark:text-gray-400">
-          <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
-            Durée :
-          </span>
-          <p className="ml-3 font-mono text-[11px] font-bold dark:text-gray-300">
-            {activeTrack.duration}
-          </p>
-        </div>
+        
       </div>
     </div>
   </div>
 
   
         
-  <div className="w-[37rem] flex-shrink-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-6 shadow-xl">
+  <div className="w-[37rem] flex-shrink-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-6 shadow-xl mt-5">
     <ScrollSectionnal title="Mes créations">
       {mesSons.map(item => (
         <SongCardCreated 
