@@ -8,11 +8,11 @@ interface PlacedNote {
 }
 
 export default function PianoEditor() {
-  // État des notes placées dans la grille
+
   const [placedNotes, setPlacedNotes] = useState<PlacedNote[]>([]);
 
   const toggleNote = (x: number, y: number) => {
-    // Logique de sélection/désélection visuelle uniquement
+   
     const exists = placedNotes.find(n => n.x === x && n.y === y);
     if (exists) {
       setPlacedNotes(placedNotes.filter(n => n.x !== x || n.y !== y));
@@ -24,7 +24,7 @@ export default function PianoEditor() {
   return (
     <div className="w-full h-full flex select-none">
         
-      {/* 1. LE CLAVIER (Utilisant octave_structure importée) */}
+   
       <div className="w-16 flex flex-col border-r border-slate-800 bg-[#1e1e2e] shrink-0">
         {octave_structure.map((item, index) => (
           <div 
@@ -37,7 +37,7 @@ export default function PianoEditor() {
         ))}
       </div>
 
-      {/* 2. LA GRILLE (Séquenceur interactif) */}
+   
       <div className="flex-1 overflow-x-auto overflow-y-hidden">
         <div className="flex h-full min-w-[1000px]">
           {Array.from({ length: 32 }).map((_, x: number) => (
