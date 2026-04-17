@@ -125,7 +125,7 @@ export default function LibraryPage() {
         </div>
 
         <div className="flex items-start gap-12">
-  <div className="sticky top-0 w-[300px] flex-shrink-0 pt-4">
+ 
     <div className="relative pl-8 py-4 group">
       <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
       
@@ -159,7 +159,7 @@ export default function LibraryPage() {
       </div>
     </div>
   </div>
-</div>
+
   
         
   <div className="w-[37rem] flex-shrink-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-6 shadow-xl">
