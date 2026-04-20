@@ -29,13 +29,13 @@ export const OptionsMenu = [
         id: 4, 
         label: 'Studio', 
         icon: MicrophoneIcon ,
-        path:"/"
+        path:"/studio"
     },
     { 
         id: 5, 
         label: 'Instrument', 
         icon: CpuChipIcon,
-        path:"/"
+        path:"/instrument"
  }
 ]
 
