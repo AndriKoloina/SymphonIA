@@ -1,32 +1,46 @@
+"use client";
 import React, { useState } from "react";
 
-export default function GuitarEditor() {
+// props pour recevoir le state du parent (StudioPage)
+interface GuitarEditorProps {
+  placedNotes: { x: number; y: number }[];
+  setPlacedNotes: React.Dispatch<React.SetStateAction<{ x: number; y: number }[]>>;
+}
+
+export default function GuitarEditor({ placedNotes, setPlacedNotes }: GuitarEditorProps) {
   const STRINGS_DATA = [
-    { label: "E", root: "E4" }, 
-    { label: "B", root: "B3" },
-    { label: "G", root: "G3" },
-    { label: "D", root: "D3" },
-    { label: "A", root: "A2" },
-    { label: "E", root: "E2" }, 
+    { label: "E", root: 64 }, // Mi aigu (MIDI)
+    { label: "B", root: 59 },
+    { label: "G", root: 55 },
+    { label: "D", root: 50 },
+    { label: "A", root: 45 },
+    { label: "E", root: 40 }, // Mi grave (MIDI)
   ];
 
   const fretCount = 14;
   const [activeNote, setActiveNote] = useState<{ s: number; f: number } | null>(null);
 
   const handlePress = (sIdx: number, fIdx: number) => {
+    // 1. Calcul de la note MIDI (Fréquence)
+    // La note est la racine de la corde + le numéro de la frette
+    const midiNote = STRINGS_DATA[sIdx].root + fIdx;
 
-    console.log(`Note cliquée : Corde ${STRINGS_DATA[sIdx].label}, Frette ${fIdx}`);
+    // 2. Enregistrement dans le Studio (on utilise x=0 pour l'instant ou un index de temps)
+    const newNote = { x: Date.now(), y: midiNote };
+    setPlacedNotes([...placedNotes, newNote]);
 
-    // Déclenchement de l'animation visuelle
+    // 3. Animation visuelle
     setActiveNote({ s: sIdx, f: fIdx });
     setTimeout(() => setActiveNote(null), 150);
+    
+    console.log(`Note enregistrée : ${midiNote} (Corde ${STRINGS_DATA[sIdx].label}, Frette ${fIdx})`);
   };
 
   return (
-    <div className="w-full h-full flex items-stretch select-none p-1 font-sans">
+    <div className="w-full h-full flex items-stretch select-none p-1 font-sans bg-[#1a1a2e]">
       
-      {/* 1. NOMS DES CORDES (GAUCHE) */}
-      <div className="flex flex-col w-12 mr-2 py-4">
+      {/* 1. NOMS DES CORDES */}
+      <div className="flex flex-col w-12 mr-2 py-2">
         {STRINGS_DATA.map((string, i) => (
           <div key={`name-${i}`} className="flex-1 flex items-center justify-center">
             <div className={`w-7 h-7 flex items-center justify-center rounded-full border transition-all duration-200 ${
@@ -44,39 +58,22 @@ export default function GuitarEditor() {
       <div className="relative flex-grow rounded-xl border border-slate-700/50 overflow-hidden shadow-2xl"
            style={{ background: 'linear-gradient(135deg, #1e1e2e 0%, #161625 100%)' }}>
         
-        {/* Effet de profondeur */}
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_60px_rgba(0,0,0,0.5)]" />
-
-        {/* Grille de fond subtile */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-             style={{ 
-               backgroundImage: `radial-gradient(#818cf8 0.5px, transparent 0.5px)`,
-               backgroundSize: '24px 24px' 
-             }} />
-
-        {/* Ligne de lumière supérieure */}
-        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-slate-500/20 to-transparent" />
-
-        {/* Frettes (Lignes Verticales) */}
+        {/* Frettes */}
         <div className="absolute inset-0 flex justify-between pointer-events-none">
           {[...Array(fretCount + 1)].map((_, i) => (
-            <div key={`fret-${i}`} className="w-[1px] h-full bg-slate-700/50 relative">
-               <div className="absolute inset-0 w-[1px] bg-indigo-400/10 ml-[1px]" />
-            </div>
+            <div key={`fret-${i}`} className="w-[1px] h-full bg-slate-700/50 relative" />
           ))}
         </div>
 
-        {/* Cordes (Visuel avec effet néon au clic) */}
-        <div className="absolute inset-0 flex flex-col py-4 pointer-events-none">
+        {/* Cordes visuelles */}
+        <div className="absolute inset-0 flex flex-col py-2 pointer-events-none">
           {STRINGS_DATA.map((_, i) => {
             const isActive = activeNote?.s === i;
             return (
               <div key={`string-line-${i}`} className="flex-1 flex items-center relative">
                 <div 
                   className={`w-full transition-all duration-75 ${
-                    isActive 
-                      ? 'brightness-200 scale-y-150 shadow-[0_0_15px_rgba(255,255,255,0.8),0_0_20px_#ec4899]' 
-                      : 'opacity-60'
+                    isActive ? 'brightness-200 scale-y-150 shadow-[0_0_15px_#ec4899]' : 'opacity-60'
                   }`}
                   style={{ 
                     height: `${0.8 + i * 0.5}px`, 
@@ -85,23 +82,19 @@ export default function GuitarEditor() {
                       : 'linear-gradient(to bottom, #d1d5db, #4b5563, #1f2937)' 
                   }} 
                 />
-                {isActive && (
-                  <div className="absolute w-full bg-pink-400/30 animate-pulse"
-                       style={{ height: `${2 + i}px`, filter: 'blur(4px)' }} />
-                )}
               </div>
             );
           })}
         </div>
 
-        {/* GRILLE D'INTERACTION */}
-        <div className="absolute inset-0 flex flex-col py-4">
+        {/* Grille d'interaction */}
+        <div className="absolute inset-0 flex flex-col py-2">
           {STRINGS_DATA.map((_, sIdx) => (
             <div key={`string-row-${sIdx}`} className="flex-1 flex">
               {[...Array(fretCount)].map((_, fIdx) => (
                 <div
                   key={`cell-${sIdx}-${fIdx}`}
-                  className="flex-1 cursor-pointer hover:bg-white/[0.03] active:bg-white/[0.08] relative transition-colors"
+                  className="flex-1 cursor-pointer hover:bg-white/[0.03] active:bg-white/[0.08] relative"
                   onMouseDown={() => handlePress(sIdx, fIdx)}
                 >
                   {activeNote?.s === sIdx && activeNote?.f === fIdx && (
@@ -115,10 +108,7 @@ export default function GuitarEditor() {
             </div>
           ))}
         </div>
-
-        <canvas className="absolute inset-0 pointer-events-none z-10" id="guitar-visualizer" />
       </div>
     </div>
   );
-};
-
+}
