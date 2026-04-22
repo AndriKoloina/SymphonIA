@@ -9,7 +9,7 @@ interface SearchBar extends SearchBarProps {}
 
 export default function SearchBar({ placeholder = "Rechercher une partition, un enregistrement...", onChange }: SearchBar) {
   return (
-    <div className="relative w-full sm:max-w-md lg:max-w-2xl group transition-all duration-300">
+    <div className="relative w-[30rem] sm:max-w-md lg:max-w-2xl group transition-all duration-300">
       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10"> 
         <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 group-focus-within:text-purple-500 group-focus-within:scale-110 transition-all duration-300"/>
       </div>
