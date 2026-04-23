@@ -38,7 +38,7 @@ export default function PianoBase() {
         />
       </div>
 
-      /* Visualiseur de notes (Waterfall) */
+      
       <div className="w-full flex justify-center mb-1">
         <PianoWaterFall 
           activeNotes={activeNotes} 
