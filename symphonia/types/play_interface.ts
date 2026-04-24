@@ -25,7 +25,8 @@ export interface UserProfileProps {
 export interface SongCardProps {
     title: string
     duration: string
-    onPlay: () => void
+    isPlaying: boolean;
+    setIsPlaying: (playing: boolean) => void
     dateCreated: string
 }
 
