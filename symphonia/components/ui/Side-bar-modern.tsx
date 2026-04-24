@@ -74,7 +74,7 @@ export default function SymphoniaSidebar() {
 
       <div className="px-5 mt-auto border-t border-white/10 pt-4 space-y-3">
         <button className="flex items-center text-gray-400 hover:text-white transition-colors group w-full">
-            <img src="/parametre.png" className='w-4 mr-3' alt="settings" />
+            <img src="/parametre.png" className='w-4 mr-3 transition-transform duration-500 group-hover:rotate-60' alt="settings" />
             <span className="text-xs font-medium">Paramètres</span>
         </button>
         <button className="flex items-center text-red-400/80 hover:text-red-400 transition-colors group w-full">

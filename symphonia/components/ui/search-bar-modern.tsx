@@ -17,8 +17,7 @@ export default function SearchBar({ placeholder = "Rechercher une partition, un 
       <input 
         type="text"
         placeholder={placeholder}
-        onChange={(e) => onChange && onChange(e.target.value)}
-        
+        onChange={(e) => onChange && onChange(e.target.value)} 
         className="block w-full pl-12 pr-4 py-3 italic  bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl border border-gray-200 dark:border-zinc-800 rounded-xl text-xs md:text-base placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all shadow-sm dark:text-white"
       />
 
