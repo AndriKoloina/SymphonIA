@@ -11,6 +11,9 @@ import SongCardScanned from '@/components/ui/songCardScanned'
 import { VerticalSection } from "@/components/ui/scrollVertical"
 
 export default function LibraryPage() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isPlaying, setIsPlaying] = useState(false)
+
   const mesSons = [
     {
       id: 1,
@@ -57,68 +60,76 @@ export default function LibraryPage() {
       title: "Composition IA #2",
       duration: "2:30",
       dateCreated: "2024-06-16"
-    }
-  ]
-
-  const scansData = [
-      {
-      id: 1,
+    },{
+      id: 9,
       title: "Analyse Mélodique #1",
       duration: "3:45",
       dateCreated: "2024-06-15"
     },
     {
-      id: 2,
+      id: 10,
       title: "Composition IA #2",
       duration: "2:30",
       dateCreated: "2024-06-16"
     },
     {
-      id: 3,
+      id: 11,
       title: "Analyse Mélodique #1",
       duration: "3:45",
       dateCreated: "2024-06-15"
     },
     {
-      id: 4,
+      id: 12,
       title: "Composition IA #2",
       duration: "2:30",
       dateCreated: "2024-06-16"
     },{
-      id: 5,
+      id: 13,
       title: "Analyse Mélodique #1", 
       duration: "3:45",
       dateCreated: "2024-06-15"
     },
     {
-      id: 6,
+      id: 14,
       title: "Composition IA #2",
       duration: "2:30",
       dateCreated: "2024-06-16"
     },{
-      id: 7,
+      id: 15,
       title: "Analyse Mélodique #1", 
       duration: "3:45",
       dateCreated: "2024-06-15"
     },
     {
-      id: 8,
+      id: 16,
       title: "Composition IA #2",
       duration: "2:30",
       dateCreated: "2024-06-16"
     }
   ]
+
+  
+  const filteredSons = mesSons.filter(son =>
+    son.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   const [activeTrack, setActiveTrack] = useState(mesSons[0])
 
+  const handlePlayTrack = (track) => {
+    setActiveTrack(track)
+    setIsPlaying(true)
+  }
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
       <main className="flex-1 ml-80 p-4 ">
         <div className="flex items-center justify-between  gap-8">
           <TitlePage title="Bibliothèque" />
-          <div className="flex-1 max-w-xl">
-            <SearchBar placeholder="Rechercher dans votre bibliothèque..." />
+          <div>
+            <SearchBar
+             placeholder="Rechercher dans votre bibliothèque..." 
+             onChange={(val) => setSearchQuery(val)}
+             />
           </div>
         </div>
 
@@ -161,23 +172,29 @@ export default function LibraryPage() {
 
   
         
-  <div className="w-[37rem] flex-shrink-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg border border-white/20 dark:border-gray-800 rounded-3xl p-6 shadow-xl mt-5">
-    <ScrollSectionnal title="Mes créations">
-      {mesSons.map(item => (
-        <SongCardCreated 
-          key={item.id} 
-          title={item.title}
-          duration={item.duration}
-          dateCreated={item.dateCreated}
-          onPlay={() => setActiveTrack(item)}
-        />
-      ))}
-    </ScrollSectionnal>
-  </div>
-
+    <ScrollSectionnal title="Mon playlist">
+          {filteredSons.length > 0 ? (
+            filteredSons.map(item => (
+              <SongCardCreated 
+                key={item.id} 
+                title={item.title}
+                duration={item.duration}
+                dateCreated={item.dateCreated}
+                onPlay={() => handlePlayTrack(item)}
+              />
+            ))
+          ) : (
+            <div className="py-10 text-center w-full">
+              <p className="text-gray-400 italic">Aucun résultat pour "{searchQuery}"</p>
+            </div>
+          )}
+        </ScrollSectionnal>
+  
         <AudioPlayer
           title={activeTrack.title}
           duration={activeTrack.duration}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
         />
       </main>
     </div>

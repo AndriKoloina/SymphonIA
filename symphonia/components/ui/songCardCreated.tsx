@@ -8,7 +8,7 @@ export default function SongCardCreated({ title, duration, dateCreated, onPlay }
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-all duration-300 z-10 flex items-center justify-center">
                     <button 
                         onClick={onPlay}
-                        className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-2xl hover:bg-purple-500 hover:scale-110 active:scale-95"
+                        className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-2xl hover:bg-purple-500 hover:scale-110 active:scale-95"
                     >
                         <PlayIcon className="w-6 h-6 text-white ml-0.5 fill-current" />
                     </button>

@@ -125,7 +125,7 @@ export default function LecteurSon({ title, duration, isPlaying, setIsPlaying }:
                     <span className="text-[10px] font-mono text-gray-400 w-8">{duration}</span>
                 </div>
 
-                {/* Section Volume Dynamique */}
+               
                 <div className="flex items-center gap-2 pr-2 border-l border-gray-100 dark:border-gray-800 pl-4 group/volume">
                     <SpeakerWaveIcon className="w-4 h-4 text-gray-400 group-hover/volume:text-[#FF0098] transition-colors" />
                     <div className="relative w-16 h-1.5 flex items-center">
