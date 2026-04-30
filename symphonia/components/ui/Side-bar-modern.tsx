@@ -20,11 +20,12 @@ export default function SymphoniaSidebar() {
           <span className="text-md font-bold tracking-[0.2em] uppercase text-white/90 italic">
             Symphon<span className="text-purple-500">ia</span>
           </span>
+          
+          
       </div>
       
       <div className="flex flex-1 items-center overflow-hidden gap-4 xl:gap-4">
         
-      
         <div 
           className="relative w-20 h-[80%] shadow-xl overflow-hidden shrink-0"
           style={{ clipPath: 'polygon(0% 0%, 100% 10%, 100% 90%, 0% 100%)' }}
@@ -59,7 +60,7 @@ export default function SymphoniaSidebar() {
                       onMouseEnter={() => setHoveredId(item.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       onClick={() => setActiveId(item.id)} 
-                      className={`cursor-pointer py-2 px-4 rounded-tr-sm rounded-br-sm transition-all duration-300 font-medium text-xs tracking-wider 
+                      className={`cursor-pointer py-2 px-4 rounded-tr-sm rounded-br-sm transition-all duration-300 font-bold text-xs tracking-wider 
                         ${isHighlighted ? 'bg-[var(--color-button)]/50 text-white translate-x-1 font-bold' : 'text-white/80 font-bold'}`}
                     >
                       {item.label} 
@@ -79,7 +80,7 @@ export default function SymphoniaSidebar() {
         </button>
         <button className="flex items-center text-red-400/80 hover:text-red-400 transition-colors group w-full">
             <img src="/deconnexion.png" className='w-4 mr-3' alt="logout" />
-            <span className="text-xs font-semibold">Déconnexion</span>
+            <a href="/auth"><span className="text-xs font-semibold">Déconnexion</span></a>
         </button>
       </div>
     </aside>
