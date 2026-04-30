@@ -106,7 +106,7 @@ export default function SignupForm() {
                         {isLoading ? "Création..." : "Créer mon compte"}
                     </button>
 
-                    <a href="/auth/login" className="mt-4 text-xs fond-bold text-zinc-400 hover:text-white transition-colors">
+                    <a href="/auth/login" className="mt-4 fond-bold text-xs text-white/50   hover:text-white hover:font-bold transition-colors">
                         Déjà un compte ? Se connecter
                     </a>
                 </form>
