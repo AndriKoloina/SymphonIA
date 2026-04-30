@@ -122,7 +122,7 @@ export default function LibraryPage() {
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
-      <main className="flex-1 ml-80 p-4 ">
+      <main className="flex-1 ml-80 pt-3 ">
         <div className="flex items-center justify-between  gap-8">
           <TitlePage title="Bibliothèque" />
           <div>
