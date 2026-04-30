@@ -60,11 +60,18 @@ export default function HomePage() {
           <TitlePage
           title="accueil"
         />
+        <div className="relative flex items-center justify-end  pr-4 bg-[transparent] pl-8 pt-5 mb-2 absolute rounded-2xl shadow-xl border border-white/5">
+          <img 
+            src="/download 1.png" 
+            className="relative  top-[-0.4rem] w-15 h-auto animate-pulse" 
+            alt="Status indicator"
+          />
         <UserProfile
           profilePicture={profileData.profilePicture}
           username={profileData.username}
           email=  {profileData.email}
         />
+        </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {cardContainer.map((card) => (
