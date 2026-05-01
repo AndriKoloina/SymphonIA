@@ -15,99 +15,103 @@ export default function LibraryPage() {
   const [isPlaying, setIsPlaying] = useState(false)
 
   const mesSons = [
-    {
-      id: 1,
-      title: "Analyse Mélodique #1",
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 2,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },
-    {
-      id: 3,
-      title: "Analyse Mélodique #1",
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 4,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },{
-      id: 5,
-      title: "Analyse Mélodique #1", 
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 6,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },{
-      id: 7,
-      title: "Analyse Mélodique #1", 
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 8,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },{
-      id: 9,
-      title: "Analyse Mélodique #1",
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 10,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },
-    {
-      id: 11,
-      title: "Analyse Mélodique #1",
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 12,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },{
-      id: 13,
-      title: "Analyse Mélodique #1", 
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 14,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    },{
-      id: 15,
-      title: "Analyse Mélodique #1", 
-      duration: "3:45",
-      dateCreated: "2024-06-15"
-    },
-    {
-      id: 16,
-      title: "Composition IA #2",
-      duration: "2:30",
-      dateCreated: "2024-06-16"
-    }
-  ]
-
+  {
+    id: 1,
+    title: "L'Envol des Murmures (Soprano)",
+    duration: "4:12",
+    dateCreated: "2024-06-10"
+  },
+  {
+    id: 2,
+    title: "Résonance de l'Âme (Alto)",
+    duration: "3:25",
+    dateCreated: "2024-06-12"
+  },
+  {
+    id: 3,
+    title: "Chœur des Ombres - Acte I",
+    duration: "5:40",
+    dateCreated: "2024-06-14"
+  },
+  {
+    id: 4,
+    title: "Éclat de Ténor (Solo)",
+    duration: "2:55",
+    dateCreated: "2024-06-15"
+  },
+  {
+    id: 5,
+    title: "Vocalise en Ré Mineur",
+    duration: "1:50",
+    dateCreated: "2024-06-16"
+  },
+  {
+    id: 6,
+    title: "Sérénade au Clair de Lune",
+    duration: "3:15",
+    dateCreated: "2024-06-18"
+  },
+  {
+    id: 7,
+    title: "L'Aube Grise (Baryton)",
+    duration: "4:05",
+    dateCreated: "2024-06-20"
+  },
+  {
+    id: 8,
+    title: "Hymne à la Lumière",
+    duration: "6:20",
+    dateCreated: "2024-06-21"
+  },
+  {
+    id: 9,
+    title: "Souffle d'Hiver (Choral)",
+    duration: "3:30",
+    dateCreated: "2024-06-22"
+  },
+  {
+    id: 10,
+    title: "Cantique de la Mer",
+    duration: "4:45",
+    dateCreated: "2024-06-23"
+  },
+  {
+    id: 11,
+    title: "L'Écho des Montagnes",
+    duration: "2:10",
+    dateCreated: "2024-06-25"
+  },
+  {
+    id: 12,
+    title: "Ballade de l'Oubli",
+    duration: "3:55",
+    dateCreated: "2024-06-26"
+  },
+  {
+    id: 13,
+    title: "Requiem Imaginaire",
+    duration: "7:12",
+    dateCreated: "2024-06-27"
+  },
+  {
+    id: 14,
+    title: "Aria pour Cœur Brisé",
+    duration: "3:20",
+    dateCreated: "2024-06-28"
+  },
+  {
+    id: 15,
+    title: "Chant du Crépuscule",
+    duration: "4:00",
+    dateCreated: "2024-06-29"
+  },
+  {
+    id: 16,
+    title: "Alléluia Éphémère",
+    duration: "2:45",
+    dateCreated: "2024-06-30"
+  }
+]
   
   const filteredSons = mesSons.filter(son =>
     son.title.toLowerCase().includes(searchQuery.toLowerCase())

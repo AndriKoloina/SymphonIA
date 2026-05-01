@@ -60,20 +60,17 @@ export default function HomePage() {
           <TitlePage
           title="accueil"
         />
-        <div className="relative flex items-center justify-end  pr-4 bg-[transparent] pl-8 pt-5 mb-2 absolute rounded-2xl shadow-xl border border-white/5">
-          <img 
-            src="/download 1.png" 
-            className="relative  top-[-0.4rem] w-15 h-auto animate-pulse" 
-            alt="Status indicator"
-          />
+        
         <UserProfile
           profilePicture={profileData.profilePicture}
           username={profileData.username}
           email=  {profileData.email}
         />
+        
         </div>
-        </div>
+        <h1 className="text-l font-black text-white/100 tracking-tight leading-tight mb-4 break-words">Tableau de bord</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
             {cardContainer.map((card) => (
               <StatCard 
                 title = {card.title}
@@ -84,7 +81,7 @@ export default function HomePage() {
             ))}
         </div>
         <div  className="top- left-0 mt-4 rounded-xl">
-          <h1 className="text-l font-bold mb-4">Fréquence d'utilisation</h1>
+          <h1 className="text-l font-black text-white/100 tracking-tight leading-tight mb-4 break-words">Fréquence d'utilisation</h1>
           <StatisticCard/>
         </div>
       </main>
