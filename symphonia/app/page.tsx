@@ -6,10 +6,7 @@ export default function Home() {
   return (
     <div>
       <main>
-          {/* <LoginPage/> */}
-         {/* <SymphoniaSidebar/> */}
-          {/* <PianoBase/> */}
-          <HomePage/>
+          <LoginPage/>
 
       </main>
           
