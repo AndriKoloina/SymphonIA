@@ -27,7 +27,6 @@ export default function SignupForm() {
         setIsLoading(true)
         setError(null)
 
-        // Logique de validation des mots de passe
         if (formData.password !== formData.confirmPassword) {
             setError("Les mots de passe ne correspondent pas");
             setIsLoading(false);
