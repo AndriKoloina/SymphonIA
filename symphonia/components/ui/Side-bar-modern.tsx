@@ -2,10 +2,12 @@
 import { useState } from 'react'
 import { OptionsMenu } from '@/hooks/menu';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function SymphoniaSidebar() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [activeId, setActiveId] = useState<number | null>(1)
+  const pathname = usePathname()
 
   const menuItems = OptionsMenu
 
@@ -33,7 +35,8 @@ export default function SymphoniaSidebar() {
           <div className="absolute inset-0 bg-[var(--color-side-bar-1)] flex flex-col justify-center  items-center pl-4">
             <div className="flex flex-col justify-center  gap-4 xl:gap-4 w-full">
               {menuItems.map((item) => { 
-                const isHighlighted = hoveredId === item.id || activeId === item.id;
+                const isActive = pathname === item.path;
+                const isHighlighted = hoveredId === item.id || isActive
                 const Icon = item.icon; 
                 return ( 
                   <div key={item.id} className="flex justify-center transition-transform duration-300 ml-4 xl:ml-8 ">
@@ -53,13 +56,13 @@ export default function SymphoniaSidebar() {
           <div className="absolute inset-0 bg-[var(--color-side-bar-2)] rounded-3xl p-6 ml-[-1rem] xl:ml-[-1.5rem]">
             <div className="flex flex-col justify-center h-full ml-[-0.5rem] gap-2 xl:gap-2"> 
               {menuItems.map((item) => {
-                const isHighlighted = hoveredId === item.id || activeId === item.id;
+                const isActive = pathname === item.path
+                const isHighlighted = hoveredId === item.id || isActive
                 return (
                   <Link href={item.path} key={item.id} className='block'>
                     <li
                       onMouseEnter={() => setHoveredId(item.id)}
                       onMouseLeave={() => setHoveredId(null)}
-                      onClick={() => setActiveId(item.id)} 
                       className={`cursor-pointer py-2 px-4 rounded-tr-sm rounded-br-sm transition-all duration-300 font-bold text-xs tracking-wider 
                         ${isHighlighted ? 'bg-[var(--color-button)]/50 text-white translate-x-1 font-bold' : 'text-white/80 font-bold'}`}
                     >
@@ -83,6 +86,19 @@ export default function SymphoniaSidebar() {
             <a href="/auth"><span className="text-xs font-semibold">Déconnexion</span></a>
         </button>
       </div>
+     <div className="flex items-center px-5 mt-8 border-t border-white/10 pt-5">
+  <img 
+    src="/download 1.png" 
+    alt="ISPM" 
+    className="w-10 h-auto opacity-80 hover:opacity-100 transition-opacity"
+  />
+  <div className="ml-3 flex flex-col">
+
+    <p className="text-[9px] italic text-gray-500 leading-tight">
+      Institut Supérieur Polytechnique de Madagascar
+    </p>
+  </div>
+</div>
     </aside>
-  );
+  )
 }
