@@ -3,6 +3,7 @@
 import Input from "@/components/ui/Input"
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react"
+import axios from "axios"
 
 export default function SignupForm() {
     // Mise à jour de l'état pour inclure tous les champs
@@ -28,18 +29,29 @@ export default function SignupForm() {
         setError(null)
 
         if (formData.password !== formData.confirmPassword) {
-            setError("Les mots de passe ne correspondent pas");
-            setIsLoading(false);
-            return;
+            setError("Les mots de passe ne correspondent pas")
+            setIsLoading(false)
+            return
         }
 
         try {
-            // Simulation de création de compte
-            await new Promise((res) => setTimeout(res, 1000))
-            console.log("Compte créé pour :", formData.username)
-            router.push("/home")
-        } catch {
-            setError("Erreur lors de la création du compte")
+            const response = await axios.post('http://localhost:8000/register', {
+                email : formData.email,
+                username: formData.username,
+                password: formData.password
+            })
+
+            if(response.data.status === "success") {
+                console.log("Compte créé avec succès !", formData.username)
+                router.push('/home')
+            }
+           
+        } catch (err: any){
+            if (err.response && err.response.data) {
+            setError(err.response.data.detail || "Erreur lors de l'inscription")
+        } else {
+            setError("Le serveur est injoignable")
+        }
         } finally {
             setIsLoading(false)
         }
