@@ -13,6 +13,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { SetStateAction, useState } from "react";
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
 
 export default function StudioPage() {
   const profileData = {
@@ -50,7 +51,8 @@ export default function StudioPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <ProtectedRoutes>
+      <div className="flex min-h-screen">
       <SymphoniaSidebar />
       <main className="flex-1 ml-80 mt-4">
         <div className="flex">
@@ -124,5 +126,6 @@ export default function StudioPage() {
         </div>
       </main>
     </div>
+    </ProtectedRoutes>
   );
 }

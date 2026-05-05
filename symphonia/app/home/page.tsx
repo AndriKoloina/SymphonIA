@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import UserProfile from "@/components/auth/userprofil/page"
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern"
 import StatCard from "@/components/ui/StatCards"
@@ -14,11 +16,26 @@ import {
 import StatisticCard from "@/components/ui/StatisticCard";
 
 export default function HomePage() {
+  const router = useRouter()
+
+  const [user, setUser] = useState<{ username: string; email: string } | null>(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('symphonia_token')
+    const storedUser = localStorage.getItem('symphonia_user')
+
+    if(!token || !storedUser) {
+      router.push('/auth/login')
+    }
+    else {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [router])
+
+  if(!user) return null
 
   const profileData = {
   profilePicture: "/user.png",
-  username: "Klwnn",
-  email: "koloina@example.com"
   }
 
   const cardContainer = [
@@ -63,8 +80,8 @@ export default function HomePage() {
         
         <UserProfile
           profilePicture={profileData.profilePicture}
-          username={profileData.username}
-          email=  {profileData.email}
+          username={user.username}
+          email={user.email}
         />
         
         </div>

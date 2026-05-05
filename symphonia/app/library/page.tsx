@@ -9,6 +9,7 @@ import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
 import SongCardScanned from '@/components/ui/songCardScanned'
 import { VerticalSection } from "@/components/ui/scrollVertical"
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes"
 
 export default function LibraryPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -124,7 +125,8 @@ export default function LibraryPage() {
     setIsPlaying(true)
   }
   return (
-    <div className="flex h-screen w-full overflow-hidden">
+    <ProtectedRoutes>
+      <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
       <main className="flex-1 ml-80 pt-3 ">
         <div className="flex items-center justify-between  gap-8">
@@ -202,5 +204,6 @@ export default function LibraryPage() {
         />
       </main>
     </div>
+    </ProtectedRoutes>
   )
 }

@@ -2,10 +2,12 @@
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern"
 import { TitlePage } from "@/components/ui/TitlePage"
 import PianoBase from "@/components/ui/piano-base"
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes"
 
 export default function ScannerPage() {
     return(
-        <div className="flex min-h-screen">
+        <ProtectedRoutes>
+            <div className="flex min-h-screen">
             <SymphoniaSidebar/>
             <main className="flex-1 ml-80 mt-4">
                 <TitlePage title="Scanner" />
@@ -13,9 +15,9 @@ export default function ScannerPage() {
                     <PianoBase />
                 </div>
                 <div>
-
                 </div>
             </main>
         </div>
+        </ProtectedRoutes>
     )
 }
