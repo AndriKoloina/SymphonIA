@@ -3,6 +3,7 @@
 import Input from "@/components/ui/Input"
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, use } from "react"
+import axios from "axios"
 
 export default function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' })
@@ -11,26 +12,50 @@ export default function LoginForm() {
     const [progress, setProgress] = useState<number>(0)
     const router=useRouter()
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+    }
+
     
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
         setError(null)
+        setProgress(0)
 
         try{
+           console.log("Tentative de connexion pour :", formData.email)
+            setProgress(25)
+            const response = await axios.post('http://localhost:8000/login', {
+              email : formData.email,
+              password: formData.password
+            })
 
-            const steps = [25, 50, 75, 100]
-            
-            for(const step of steps) {
-                await new Promise((res) => setTimeout(res, 100))
-                setProgress(step)
+            setProgress(75)
+
+            if(response.data.status === "success") {
+              const { token, user } = response.data
+
+              localStorage.setItem('symphonia_token', token)
+              localStorage.setItem('symphonia_user', JSON.stringify(user))
+
+              setProgress(100)
+              console.log("Connexion réussie !", user.username)
+
+              setTimeout(() => {
+                router.push('/home'), 500
+              })
             }
-             console.log("connexion avec: ", formData)
-             router.push("/home")
            
         }
-        catch{
-           setError("Erreur de connexion")
+        catch(err: any){
+           setProgress(0)
+           if(err.response && err.response.data) {
+            setError(err.response?.data?.detail || "Identifiants invalides")
+            } else {
+            setError("Impossible de contacter le serveur")
+           }
         }
         finally{
             setIsLoading(false)
@@ -51,11 +76,17 @@ export default function LoginForm() {
             <Input 
                 label="Email" 
                 type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 required 
             />
             <Input 
                 label="Mot de passe"
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
             />
           </div>
