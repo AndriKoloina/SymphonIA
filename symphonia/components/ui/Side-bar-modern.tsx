@@ -2,14 +2,33 @@
 import { useState } from 'react'
 import { OptionsMenu } from '@/hooks/menu';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation'
+import axios from 'axios';
+import router from 'next/dist/shared/lib/router/router';
 
 export default function SymphoniaSidebar() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [activeId, setActiveId] = useState<number | null>(1)
   const pathname = usePathname()
+  const router = useRouter()
 
   const menuItems = OptionsMenu
+
+const handleLogout = async () => {
+    try {
+      // 1. Appel au backend (optionnel mais propre)
+      await axios.post('http://localhost:8000/logout');
+    } catch (error) {
+      console.error("Erreur backend logout:", error);
+    } finally {
+      // 2. Nettoyage local (indispensable)
+      localStorage.removeItem('symphonia_token');
+      localStorage.removeItem('symphonia_user');
+
+      // 3. Redirection vers le login
+      router.push('/auth/login');
+    }
+  }
 
   return (
     <aside className="flex flex-col w-64 xl:w-75 h-[98vh] m-2 bg-[#1B2945] rounded-[1rem] pr-4 pl-0 py-4 border border-white/5 shadow-2xl font-sans overflow-hidden absolute"> 
@@ -81,7 +100,9 @@ export default function SymphoniaSidebar() {
             <img src="/parametre.png" className='w-4 mr-3 transition-transform duration-500 group-hover:rotate-60' alt="settings" />
             <span className="text-xs font-medium">Paramètres</span>
         </button>
-        <button className="flex items-center text-red-400/80 hover:text-red-400 transition-colors group w-full">
+        <button className="flex items-center text-red-400/80 hover:text-red-400 transition-colors group w-full"
+          onClick={handleLogout}
+        >
             <img src="/deconnexion.png" className='w-4 mr-3' alt="logout" />
             <a href="/auth"><span className="text-xs font-semibold">Déconnexion</span></a>
         </button>
@@ -93,7 +114,6 @@ export default function SymphoniaSidebar() {
     className="w-10 h-auto opacity-80 hover:opacity-100 transition-opacity"
   />
   <div className="ml-3 flex flex-col">
-
     <p className="text-[9px] italic text-gray-500 leading-tight">
       Institut Supérieur Polytechnique de Madagascar
     </p>
