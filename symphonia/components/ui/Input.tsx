@@ -10,7 +10,8 @@ export default function Input({ label, ...props }: InputProps) {
     <div className="relative mt-6">
   <input
     {...props}
-    id={label}
+    id={props.name || label.toLowerCase().replace(/\s+/g, '-').toLowerCase()}
+    value={props.value ?? ""}
     placeholder=" " 
     className="peer block w-full rounded-lg border border-white/20 bg-transparent px-3 py-3 text-white text-xs 
                placeholder-transparent focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/50
