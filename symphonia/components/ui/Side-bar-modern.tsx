@@ -16,19 +16,19 @@ export default function SymphoniaSidebar() {
 
 const handleLogout = async () => {
     try {
-      // 1. Appel au backend (optionnel mais propre)
-      await axios.post('http://localhost:8000/logout');
+      await axios.post('http://localhost:8000/logout')
     } catch (error) {
-      console.error("Erreur backend logout:", error);
+      console.error("Erreur backend logout:", error)
     } finally {
-      // 2. Nettoyage local (indispensable)
-      localStorage.removeItem('symphonia_token');
-      localStorage.removeItem('symphonia_user');
-
-      // 3. Redirection vers le login
-      router.push('/auth/login');
+      localStorage.removeItem('symphonia_token')
+      localStorage.removeItem('symphonia_user')
+      router.push('/auth/login')
     }
   }
+
+const handleParameters = () => {
+    router.push('/parameter')
+}
 
   return (
     <aside className="flex flex-col w-64 xl:w-75 h-[98vh] m-2 bg-[#1B2945] rounded-[1rem] pr-4 pl-0 py-4 border border-white/5 shadow-2xl font-sans overflow-hidden absolute"> 
@@ -96,7 +96,9 @@ const handleLogout = async () => {
       </div>
 
       <div className="px-5 mt-auto border-t border-white/10 pt-4 space-y-3">
-        <button className="flex items-center text-gray-400 hover:text-white transition-colors group w-full">
+        <button className="flex items-center text-gray-400 hover:text-white transition-colors group w-full"
+          onClick={handleParameters}
+        >
             <img src="/parametre.png" className='w-4 mr-3 transition-transform duration-500 group-hover:rotate-60' alt="settings" />
             <span className="text-xs font-medium">Paramètres</span>
         </button>
