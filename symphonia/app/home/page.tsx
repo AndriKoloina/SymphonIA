@@ -32,7 +32,11 @@ export default function HomePage() {
     }
   }, [router])
 
-  if(!user) return null
+  if (!user) return (
+  <div className="flex h-screen items-center justify-center bg-[#17083E]">
+    <p className="text-white text-xl">Utilisateur non trouvé - Redirection...</p>
+  </div>
+)
 
   const profileData = {
   profilePicture: "/user.png",

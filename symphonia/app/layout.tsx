@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
 
 export const metadata: Metadata = {
   title: "symphonia",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body>{children}</body>
+      <ProtectedRoutes>
+        <body>{children}</body>
+      </ProtectedRoutes> 
     </html>
   );
 }

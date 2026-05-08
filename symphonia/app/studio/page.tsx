@@ -4,7 +4,7 @@ import GuitarEditor from "@/components/ui/GuitarEditor";
 import PianoEditor from "@/components/ui/PianoEditor";
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern";
 import { TitlePage } from "@/components/ui/TitlePage";
-import { octave_structure } from '@/hooks/pianoNote'; // Import pour passer les données
+import { octave_structure } from '@/hooks/pianoNote';
 import {
   SparklesIcon,
   PlayIcon,
@@ -12,9 +12,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { SetStateAction, useState } from "react";
-import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
-
+import { useState } from "react";
 export default function StudioPage() {
   const profileData = {
     profilePicture: "/user.png",
@@ -24,10 +22,8 @@ export default function StudioPage() {
 
   const [activeInstrument, setActiveInstrument] = useState("piano");
   
-  // State pour les notes partagé avec PianoEditor
   const [placedNotes, setPlacedNotes] = useState<{x: number, y: number}[]>([]);
 
-  // --- LOGIQUE DES ACTIONS ---
   const handleTrash = () => {
     if (placedNotes.length > 0) {
       setPlacedNotes([]); // Vide les notes
@@ -38,7 +34,6 @@ export default function StudioPage() {
     alert(message);
   };
 
-  // Fonction pour rendre le bon composant avec les props nécessaires
   const renderEditor = () => {
     switch (activeInstrument) {
       case "piano":
@@ -51,7 +46,7 @@ export default function StudioPage() {
   };
 
   return (
-    <ProtectedRoutes>
+
       <div className="flex min-h-screen">
       <SymphoniaSidebar />
       <main className="flex-1 ml-80 mt-4">
@@ -126,6 +121,5 @@ export default function StudioPage() {
         </div>
       </main>
     </div>
-    </ProtectedRoutes>
   );
 }
