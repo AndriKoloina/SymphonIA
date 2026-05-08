@@ -17,6 +17,7 @@ export default function LoginForm() {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
+    const Api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
     
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -27,7 +28,7 @@ export default function LoginForm() {
         try{
            console.log("Tentative de connexion pour :", formData.email)
             setProgress(25)
-            const response = await axios.post('http://localhost:8000/login', {
+            const response = await axios.post(`${Api_url}/login`, {
               email : formData.email,
               password: formData.password
             })
@@ -44,8 +45,8 @@ export default function LoginForm() {
               console.log("Connexion réussie !", user.username)
 
               setTimeout(() => {
-                router.push('/home'), 500
-              })
+                router.push('/home')
+              }, 500)
             }
            
         }
@@ -66,7 +67,13 @@ export default function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-[#17083] p-4">
       <div className="w-full max-w-md bg-[#1B2945] p-10 rounded-2xl shadow-xl">
         
-        <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+        <form
+         className="flex flex-col items-center"
+          
+         onSubmit={(e) => {
+    e.preventDefault(); // Verrou 1 : Empêche le rechargement immédiat
+    handleSubmit(e);
+  }}>
           <img src="/symphonia-logo.png" className="w-16 h-auto mb-4" alt="Logo" />
           <span className="text-lg font-bold tracking-[0.2em] uppercase text-white/90 font-sans italic">
             Symphon<span className="text-purple-500">ia</span>
@@ -95,6 +102,10 @@ export default function LoginForm() {
                     </a>
           <button 
               type="submit" 
+              onClick={(e) => {
+       
+        if (isLoading) e.preventDefault(); 
+    }}
               disabled={isLoading}
               className="mt-8 w-full md:w-auto min-w-[140px] h-12 bg-[#8A2BE2] font-bold hover:bg-purple-500 text-white rounded-lg transition-all text-xs flex items-center justify-center"
             >
