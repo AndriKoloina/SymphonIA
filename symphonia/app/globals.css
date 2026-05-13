@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
+/* 1. Définition unique des couleurs (Plus de mode sombre ici) */
 :root {
   --background: #17083F;
-  --foreground: #171717;
+  --foreground: #ffffff; /* Texte en blanc pour ton fond violet */
   --color-side-bar-2 : #1A1F2B;
   --color-side-bar-1 : #D9D9D9;
   --background-side-bar: #1B2945;
@@ -11,30 +12,23 @@
   --color-falling-barre : #FF0098;
 }
 
+/* 2. Mapping Tailwind v4 */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-sidebar-bg: var(--background-side-bar);
+  --color-primary: var(--color-button);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 3. Style de base du corps de page */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
-nextjs-portal,
-#vercel-toolbar-container,
-[data-vercel-toolbar],
-.__vercel_toolbar {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
+/* 4. Animations */
 @keyframes fall {
   0% {
     transform: translateY(-100px);
@@ -53,7 +47,7 @@ nextjs-portal,
   animation: fall 3s linear forwards;
 }
 
-
+/* 5. Utilitaires et Scrollbar */
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -62,11 +56,6 @@ nextjs-portal,
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
-body {
-  background: #17083F;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -78,10 +67,18 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #52525b; /* zinc-600 */
+  background: #52525b;
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a855f7; /* purple-500 */
+  background: #a855f7;
+}
+
+/* 6. Suppression des éléments inutiles */
+nextjs-portal,
+#vercel-toolbar-container,
+[data-vercel-toolbar],
+.__vercel_toolbar {
+  display: none !important;
 }

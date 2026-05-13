@@ -4,12 +4,9 @@ import React, { useState } from 'react'
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern"
 import { TitlePage } from "@/components/ui/TitlePage"
 import SearchBar from "@/components/ui/search-bar-modern"
-import AudioPlayer from "@/components/ui/LecteurSon"
 import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
-import SongCardScanned from '@/components/ui/songCardScanned'
-import { VerticalSection } from "@/components/ui/scrollVertical"
-import ProtectedRoutes from "@/components/auth/ProtectedRoutes"
+import LecteurSon from '@/components/ui/LecteurSon'
 
 export default function LibraryPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -125,7 +122,6 @@ export default function LibraryPage() {
     setIsPlaying(true)
   }
   return (
-    <ProtectedRoutes>
       <div className="flex h-screen w-full overflow-hidden">
       <SymphoniaSidebar />
       <main className="flex-1 ml-80 pt-3 ">
@@ -148,7 +144,7 @@ export default function LibraryPage() {
         Lecture en cours
       </span>
       
-      <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-tight mb-4 break-words">
+      <h1 className="text-3xl font-black text-white/95 dark:text-white tracking-tight leading-tight mb-4 break-words">
         {activeTrack.title}
       </h1>
       
@@ -196,7 +192,7 @@ export default function LibraryPage() {
           )}
         </ScrollSectionnal>
   
-        <AudioPlayer
+        <LecteurSon
           title={activeTrack.title}
           duration={activeTrack.duration}
           isPlaying={isPlaying}
@@ -204,6 +200,5 @@ export default function LibraryPage() {
         />
       </main>
     </div>
-    </ProtectedRoutes>
   )
 }

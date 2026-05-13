@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { PlayIcon, PauseIcon, BackwardIcon, ForwardIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import type { SongCardProps } from '@/types/play_interface';
 
-interface LecteurSonProps extends SongCardProps {
+interface LecteurSonProps {
+    title: string;
+    duration: string;
+    url: string; // Ajout de l'URL réelle
     isPlaying: boolean;
     setIsPlaying: (playing: boolean) => void;
 }

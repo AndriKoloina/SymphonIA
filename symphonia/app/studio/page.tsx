@@ -52,11 +52,6 @@ export default function StudioPage() {
       <main className="flex-1 ml-80 mt-4">
         <div className="flex">
           <TitlePage title="Studio" />
-          <UserProfile
-            profilePicture={profileData.profilePicture}
-            username={profileData.username}
-            email={profileData.email}
-          />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full h-[476px] p-4">
           <div className="lg:col-span-3 p-4 items-center justify-center ">
