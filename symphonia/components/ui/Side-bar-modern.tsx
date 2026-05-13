@@ -41,8 +41,7 @@ const handleParameters = () => {
           <span className="text-md font-bold tracking-[0.2em] uppercase text-white/90 italic">
             Symphon<span className="text-purple-500">ia</span>
           </span>
-          
-          
+           <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent mt-1 opacity-50"></div>
       </div>
       
       <div className="flex flex-1 items-center overflow-hidden gap-4 xl:gap-4">
