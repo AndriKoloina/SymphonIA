@@ -3,7 +3,7 @@
 /* 1. Définition unique des couleurs (Plus de mode sombre ici) */
 :root {
   --background: #17083F;
-  --foreground: #ffffff; /* Texte en blanc pour ton fond violet */
+  --foreground: #ffffff;
   --color-side-bar-2 : #1A1F2B;
   --color-side-bar-1 : #D9D9D9;
   --background-side-bar: #1B2945;
