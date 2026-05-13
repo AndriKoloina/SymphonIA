@@ -43,7 +43,7 @@ export default function SignupForm() {
 
             if(response.data.status === "success") {
                 console.log("Compte créé avec succès !", formData.username)
-                router.push('/home')
+                router.push('/auth/login')
             }
            
         } catch (err: any){
