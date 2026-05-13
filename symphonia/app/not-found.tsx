@@ -30,8 +30,8 @@ export default function Custom404() {
      }
    }, [seconds, router])
 
-    return(
-       <div className="min-h-screen flex flex-col items-center justify-center bg-[#17083F] text-white overflow-hidden font-sans">
+      return(
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#17083F] text-white overflow-hidden font-sans relative p-4">
      <div className="absolute inset-0 z-0 opacity-20" 
            style={{ backgroundImage: 'linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)', size: '40px 40px', backgroundSize: '40px 40px' }} />
       {[...Array(15)].map((_, i) => (
@@ -61,7 +61,7 @@ export default function Custom404() {
             transition={{ repeat: Infinity, duration: 2 }}
             className="text-[12rem] font-black leading-none tracking-tighter text-white/5 select-none"
           >
-            404
+            404 not-found
           </motion.h1>
           <div className="absolute inset-0 flex items-center justify-center">
              
@@ -141,7 +141,7 @@ export default function Custom404() {
         >
           <div className="flex flex-col items-center gap-2">
             <div className="h-[1px] w-12 bg-indigo-500/50 group-hover:w-24 transition-all duration-500" />
-            <p className="text-slate-400 font-mono text-sm uppercase tracking-widest">
+            <p className="text-slate-400 font-mono text-sm  tracking-widest">
               Relocalisation en cours...
             </p>
           </div>
