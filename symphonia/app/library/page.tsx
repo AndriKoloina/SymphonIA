@@ -117,7 +117,7 @@ export default function LibraryPage() {
 
   const [activeTrack, setActiveTrack] = useState(mesSons[0])
 
-  const handlePlayTrack = (track) => {
+  const handlePlayTrack = (track : any) => {
     setActiveTrack(track)
     setIsPlaying(true)
   }
@@ -197,6 +197,7 @@ export default function LibraryPage() {
           duration={activeTrack.duration}
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
+          url='/'
         />
       </main>
     </div>

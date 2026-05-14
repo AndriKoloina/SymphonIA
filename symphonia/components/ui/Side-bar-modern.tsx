@@ -94,7 +94,7 @@ const handleParameters = () => {
         </div>
       </div>
 
-      <div className="px-5 mt-auto border-t border-white/10 pt-4 space-y-3">
+      <div className="px-5 mt-auto border-t border-white/10 pt-3 space-y-3">
         <button className="flex items-center text-gray-400 hover:text-white transition-colors group w-full"
           onClick={handleParameters}
         >
@@ -108,7 +108,7 @@ const handleParameters = () => {
             <a href="/auth"><span className="text-xs font-semibold">Déconnexion</span></a>
         </button>
       </div>
-     <div className="flex items-center px-5 mt-8 border-t border-white/10 pt-5">
+     <div className="flex items-center px-5 mt-3 border-t border-white/10 pt-5">
   <img 
     src="/download 1.png" 
     alt="ISPM" 

@@ -5,9 +5,9 @@ import { PlayIcon, PauseIcon, BackwardIcon, ForwardIcon, SpeakerWaveIcon } from 
 import type { SongCardProps } from '@/types/play_interface';
 
 interface LecteurSonProps {
-    title: string;
+    title: string ;
     duration: string;
-    url: string; // Ajout de l'URL réelle
+    url: string;
     isPlaying: boolean;
     setIsPlaying: (playing: boolean) => void;
 }
