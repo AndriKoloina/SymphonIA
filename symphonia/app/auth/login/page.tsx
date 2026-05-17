@@ -17,7 +17,8 @@ export default function LoginForm() {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const Api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+    const Api_url = process.env.NEXT_PUBLIC_API_URL || 
+(typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.hostname}:8000` : 'http://localhost:8000')
     
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -50,14 +51,17 @@ export default function LoginForm() {
             }
            
         }
-        catch(err: any){
-           setProgress(0)
-           if(err.response && err.response.data) {
-            setError(err.response?.data?.detail || "Identifiants invalides")
-            } else {
-            setError("Impossible de contacter le serveur")
-           }
-        }
+        catch(err: any) {
+    setProgress(0)
+    // CE LOG EST CRUCIAL : Il va vous dire exactement pourquoi la requête a échoué
+    console.error("Détail de l'erreur réseau :", err); 
+
+    if(err.response && err.response.data) {
+        setError(err.response?.data?.detail || "Identifiants invalides")
+    } else {
+        setError("Impossible de contacter le serveur")
+    }
+}
         finally{
             setIsLoading(false)
         }
@@ -87,6 +91,7 @@ export default function LoginForm() {
                 value={formData.email}
                 onChange={handleChange}
                 required 
+                suppressHydrationWarning
             />
             <Input 
                 label="Mot de passe"
@@ -95,6 +100,7 @@ export default function LoginForm() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                suppressHydrationWarning
             />
           </div>
           <a href="/auth/signup" className="text-xs mr-40 text-white/50 mt-2 font-bold hover:text-white transition-colors">
