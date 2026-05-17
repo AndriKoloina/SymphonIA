@@ -26,10 +26,9 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-        # Autoriser toutes les origines (à restreindre en production)
     allow_methods=["*"],  # Autoriser toutes les méthodes HTTP  
     allow_headers=["*"],  # Autoriser tous les headers
-    allow_credentials=True,  # Autoriser les cookies et les credentials
+    allow_credentials=False,  # Autoriser les cookies et les credentials
 )
 
 db_configs = {
