@@ -60,7 +60,7 @@ const handleParameters = () => {
                   <div key={item.id} className="flex justify-center transition-transform duration-300 ml-4 xl:ml-8 ">
                     <Icon className={`w-5 h-5 xl:w-6 xl:h-6  transition-all duration-300 ${isHighlighted ? 'scale-125 text-white bg-[var(--color-button)]/50 rounded-tl-sm rounded-bl-sm p-1' : 'text-black'}`} />
                   </div>
-                );
+                )
               })}
             </div>
           </div>

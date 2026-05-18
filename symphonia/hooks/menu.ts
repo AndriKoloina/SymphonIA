@@ -39,3 +39,29 @@ export const OptionsMenu = [
  }
 ]
 
+export const OptionsMenuMobile = [
+    {
+        id:1,
+        label: "Accueil",
+        icon: HomeIcon,
+        path:"/home"
+    },
+    { 
+        id: 2, 
+        label: 'Scanner', 
+        icon: DocumentMagnifyingGlassIcon,
+        path:"/scanner"
+    },
+    { 
+        id: 3, 
+        label: 'Bibliothèque', 
+        icon: RectangleStackIcon, 
+        path:"/library"
+    },
+    { 
+        id: 4, 
+        label: 'Instrument', 
+        icon: CpuChipIcon,
+        path:"/instrument"
+ }
+]
