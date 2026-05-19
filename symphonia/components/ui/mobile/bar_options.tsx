@@ -4,6 +4,7 @@ import { OptionsMenuMobile } from "@/hooks/menu"
 import { usePathname } from "next/navigation"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
+import { Cog6ToothIcon, PowerIcon } from '@heroicons/react/24/outline'
 export default function SideMobile() {
     const menuItems = OptionsMenuMobile
     const[hovereId, setHoverId] = useState<number | null>(1)
@@ -11,27 +12,36 @@ export default function SideMobile() {
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
 
+    const navigateTo = () => {
+    router.push("/parameter")
+}
+
+    const handleLogout = () => {
+      
+      router.push("path/login")
+    }
+
     const burgerOptions = [
         {
-            label : "username",
-            onclick: () => console.log('Profil')
-        },
-        {
             label:'Paramètres', 
-            onclick:() => console.log("Paramètre")  
+            onclick: navigateTo,
+            icon:  Cog6ToothIcon,
+            danger:false
         },
         {
             label:'Deconnexion', 
-            onclick:() => console.log("Déconnexion")  
+            onclick: handleLogout,
+            icon: PowerIcon,
+            danger: true
         }
     ]
 
   return (
     <div className="flex flex-col min-h-screen ">
     <main className="flex-1 p-1 text-white relative">
-      <div className="w-full h-full bg-[#D9D9D9] rounded-2xl relative">
+      <div className="w-full h-full bg-[#1B2945] rounded-2xl relative">
         
-        {/* EN-TÊTE HORIZONTALE */}
+       
         <div className="w-full flex flex-row justify-between items-center p-1">
           <img 
             src="download 1.png"
@@ -45,30 +55,43 @@ export default function SideMobile() {
             className="p-2 text-gray-700 hover:text-black transition-colors rounded-lg hover:bg-black/5 relative z-50"
           >
             {/* Si le menu est ouvert, on affiche la croix X, sinon les 3 barres */}
-            {isOpen ? <XMarkIcon className="w-8 h-8" /> : <Bars3Icon className="w-8 h-8" />}
+            {isOpen ? <XMarkIcon className="w-8 h-8 text-white/50" /> : <Bars3Icon className="w-8 h-8 text-white/50" />}
           </button>
         </div>
 
         {/* 3. MENU DÉROULANT (S'affiche uniquement si isOpen est true) */}
         {isOpen && (
-          <div className="absolute top-14 right-2 w-48 bg-[#1B2945] rounded-xl shadow-2xl p-2 z-40 border border-white/10 animate-in fade-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col gap-1">
-              {burgerOptions.map((option, index) => (
-                <button
-                  key={index}
+          <div className="absolute top-15 right-2 w-48 bg-[#1B2945] rounded-xl shadow-2xl p-2 z-40 border border-white/10 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-col gap-1 ">
+                    <div className="flex items-center gap-3 px-3 py-2.5 mb-1 border-b border-white/10">
+              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-semibold overflow-hidden">
+                U
+              </div>
+              <h1 className="text-sm font-medium text-white/95 truncate">Username</h1>
+            </div>
+              {burgerOptions.map((option, index) => {
+                const Icon = option.icon
+                return (
+                  <div className="flex flex hover:text-purple-500">
+                      <button
+                      key={index}
                   onClick={() => {
-                    option.onClick();
-                    setIsOpen(false); // Ferme le menu après un clic
+                    option.onClick()  
+                    setIsOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-2.5 text-sm rounded-lg transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 flex text-xs rounded-lg transition-colors ${
                     option.danger 
                       ? 'text-red-400 hover:bg-red-500/10' 
                       : 'text-white/90 hover:bg-white/10'
                   }`}
                 >
-                  {option.label}
+                   <Icon className="w-6 hover:text-purple-500"/>
+                  <span className="mt-1 ml-2 hover:text-bold">{option.label}</span>
                 </button>
-              ))}
+                  </div>
+                
+              )
+              })}
             </div>
           </div>
         )}
