@@ -7,6 +7,10 @@ import SearchBar from "@/components/ui/search-bar-modern"
 import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
 import LecteurSon from '@/components/ui/LecteurSon'
+import SideMobile from '@/components/ui/mobile/bar_options'
+import { ScrollSectionnalMobile } from '@/components/ui/mobile/scrollSectionnalMobile'
+import SongCardMobile from '@/components/ui/mobile/songCardsMobile'
+import { MusicalNoteIcon } from '@heroicons/react/24/outline'
 
 export default function LibraryPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -117,14 +121,23 @@ export default function LibraryPage() {
 
   const [activeTrack, setActiveTrack] = useState(mesSons[0])
 
-  const handlePlayTrack = (track : any) => {
+  const handlePlayTrack = (track: any, requestedState?: boolean) => {
+    if (activeTrack?.id === track.id && requestedState === false) {
+      setIsPlaying(false)
+      return
+    }
     setActiveTrack(track)
     setIsPlaying(true)
   }
   return (
-      <div className="flex h-screen w-full overflow-hidden">
-      <SymphoniaSidebar />
-      <main className="flex-1 ml-80 pt-3 ">
+      <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden">
+      <div className="hidden lg:block">
+              <SymphoniaSidebar/>
+            </div>
+      <div className="block lg:hidden">
+              <SideMobile/>
+      </div>
+      <main className="flex-1 ml-0 lg:ml-80 pt-3 ">
         <div className="flex items-center justify-between  gap-8">
           <TitlePage title="Bibliothèque" />
           <div>
@@ -137,37 +150,47 @@ export default function LibraryPage() {
 
         <div className="flex items-start gap-12">
  
-    <div className="relative pl-8 py-4 group">
-      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
+    <div className="relative pl-8 py-4 group flex flex-1 justify-content items-between">
+      <div>
+        <div className="absolute left-4 top-0 bottom-0 w-1.5 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
       
-      <span className="text-[10px] font-black uppercase text-purple-500 tracking-[0.3em] mb-2 block">
+      <span className="text-[0.5rem] lg:text-[10px] font-black uppercase text-purple-500 tracking-[0.3em] mb-2 block">
         Lecture en cours
       </span>
       
-      <h1 className="text-3xl font-black text-white/95 dark:text-white tracking-tight leading-tight mb-4 break-words">
+      <h1 className="text-[1rem] lg:text-3xl font-black text-white/95 dark:text-white tracking-tight leading-tight mb-4 break-words">
         {activeTrack.title}
       </h1>
       
       <div className="flex flex-col gap-2">
         <div className="flex items-center text-gray-500 dark:text-gray-400">
-          <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+          <span className="text-[0.5rem] lg:text-[9px] font-bold uppercase tracking-wider opacity-60">
             Enregistré le :
           </span>
-          <p className="ml-3 px-2 py-0.5 rounded font-mono text-[11px] font-bold text-pink-500 bg-pink-500/10 border border-pink-500/20">
+          <p className="ml-3 px-2 py-0.5 rounded font-mono text-[0.5em] lg:text-[11px] font-bold text-pink-500 bg-pink-500/10 border border-pink-500/20">
             {activeTrack.dateCreated}
           </p>
 
               <div className="flex items-center text-gray-500 dark:text-gray-400 ml-5">
-              <span className="text-[9px] font-bold uppercase tracking-wider opacity-60">
+              <span className="text-[0.5rem] lg:text-[9px] font-bold uppercase tracking-wider opacity-60">
                 Durée :
               </span>
-              <p className="ml-3 font-mono text-[11px] font-bold dark:text-gray-300">
+              <p className="ml-3 font-mono text-[0.5em] lg:text-[11px] font-bold dark:text-gray-300">
                 {activeTrack.duration}
               </p>
             </div>
         </div>
-        
-        
+          
+      </div>
+      </div>
+      <div className='block lg:hidden relative top-1'>
+        <MusicalNoteIcon
+          className={`w-15 h-15 rounded-xl p-2 ml-4 transition-all duration-300 ${
+            isPlaying
+              ? 'text-white bg-gradient-to-tr from-pink-500 to-indigo-500 animate-pulse ring-2 ring-purple-500/20'
+              : 'text-slate-500 bg-white/5 border border-white/10'
+          }`}
+        />
       </div>
     </div>
   </div>
@@ -191,6 +214,25 @@ export default function LibraryPage() {
             </div>
           )}
         </ScrollSectionnal>
+
+        <ScrollSectionnalMobile title="Mon playlist"> 
+          {filteredSons.length > 0 ? (
+            filteredSons.map(item => (
+              <SongCardMobile
+                key={item.id} 
+                title={item.title}
+                duration={item.duration}
+                dateCreated={item.dateCreated}
+                isPlaying={activeTrack.id === item.id && isPlaying}
+                onPlay={(requestedState) => handlePlayTrack(item, requestedState)}
+              />
+            ))
+          ) : (
+            <div className="py-10 text-center w-full">
+              <p className="text-gray-400 italic">Aucun résultat pour "{searchQuery}"</p>
+            </div>
+          )}
+        </ScrollSectionnalMobile>
   
         <LecteurSon
           title={activeTrack.title}
