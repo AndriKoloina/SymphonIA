@@ -1,21 +1,26 @@
 'use client'
-import FallingNote from "./pianoNote" 
 
-export default function PianoWaterFall({ activeNotes, totalWidth, width }: { activeNotes: any[], totalWidth: number, width?:number }) {
+import React from 'react'
+import FallingNote from '@/hooks/pianoNote'
+
+interface PianoWaterFallProps {
+  activeNotes: any[]
+  totalWidth: number
+}
+
+export default function PianoWaterFall({ activeNotes, totalWidth }: PianoWaterFallProps) {
   return (
     <div 
-      className="relative h-64 overflow-hidden bg-gradient-to-t from-[#0F172A] to-transparent rounded-t-xl mx-auto"
+      className="relative overflow-hidden h-48 bg-slate-950/60 rounded-t-xl border-b border-slate-800"
       style={{ width: `${totalWidth}px` }}
     >
-   
-      <div className="absolute bottom-0 w-full h-[2px] bg-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.2)]" />
-
       {activeNotes.map((note) => (
         <FallingNote 
           key={note.id} 
-          lane={note.lane} 
-          duration={3}
-          width={width}
+          leftPosition={note.leftPosition} 
+          width={note.width || 22} 
+          duration={note.duration || 3} 
+          color={note.color}
         />
       ))}
     </div>

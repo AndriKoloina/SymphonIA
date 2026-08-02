@@ -37,4 +37,22 @@ export const instruments = [
     description: "La guitare électrique est un instrument à cordes pincées, appartenant à la famille des cordophones. Elle est largement utilisée dans divers genres musicaux, tels que le rock, le blues et la musique populaire."
 
   },
+  {
+    id: 7,
+    image: "/batterie.png",
+    name: "Batterie",
+    description: "La batterie est un ensemble d'instruments de percussion (cymbales, caisse claire, tom-toms et grosse caisse) joués par un seul musicien à l'aide de baguettes et de pédales."
+  },
+ {
+    id: 8,
+    image: "/ukulele.png",
+    name: "Ukulélé",
+    description: "Le ukulélé est un petit instrument traditionnel hawaiien à quatre cordes pincées, réputé pour sa sonorité joyeuse et chaleureuse."
+  },
+  {
+    id: 9,
+    image: "/marimba.png",
+    name: "Marimba / Xylophone",
+    description: "Le marimba est un instrument de percussion mélodique composé de lames en bois sous lesquelles se trouvent des tuyaux résonateurs répercutant un son rond et profond."
+  }
 ];

@@ -25,14 +25,14 @@ export const OptionsMenu = [
         icon: RectangleStackIcon, 
         path:"/library"
     },
+    // { 
+    //     id: 4, 
+    //     label: 'Studio', 
+    //     icon: MicrophoneIcon ,
+    //     path:"/studio"
+    // },
     { 
         id: 4, 
-        label: 'Studio', 
-        icon: MicrophoneIcon ,
-        path:"/studio"
-    },
-    { 
-        id: 5, 
         label: 'Instrument', 
         icon: CpuChipIcon,
         path:"/instrument"
