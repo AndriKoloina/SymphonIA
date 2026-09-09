@@ -8,8 +8,8 @@ import { ScrollSectionnal } from "@/components/ui/scrollSectionnal"
 import SongCardCreated from "@/components/ui/songCardCreated"
 import LecteurSon from '@/components/ui/LecteurSon'
 import SideMobile from '@/components/ui/mobile/bar_options'
-import { ScrollSectionnalMobile } from '@/components/ui/mobile/scrollSectionnalMobile'
-import SongCardMobile from '@/components/ui/mobile/songCardsMobile'
+// import { ScrollSectionnalMobile } from '@/components/ui/mobile/scrollSectionnalMobile'
+// import SongCardMobile from '@/components/ui/mobile/songCardsMobile'
 import { MusicalNoteIcon } from '@heroicons/react/24/outline'
 
 export default function LibraryPage() {
@@ -215,7 +215,7 @@ export default function LibraryPage() {
           )}
         </ScrollSectionnal>
 
-        <ScrollSectionnalMobile title="Mon playlist"> 
+        {/* <ScrollSectionnalMobile title="Mon playlist"> 
           {filteredSons.length > 0 ? (
             filteredSons.map(item => (
               <SongCardMobile
@@ -232,7 +232,7 @@ export default function LibraryPage() {
               <p className="text-gray-400 italic">Aucun résultat pour "{searchQuery}"</p>
             </div>
           )}
-        </ScrollSectionnalMobile>
+        </ScrollSectionnalMobile> */}
   
         <LecteurSon
           title={activeTrack.title}
