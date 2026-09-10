@@ -59,7 +59,7 @@ export default function LecteurSon({ title, duration, isPlaying, setIsPlaying }:
     }
 
     return (
-        <div className="fixed bottom-6 left-[340px] right-8 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="hidden lg:block fixed bottom-6 left-[340px] right-8 z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-white/70 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 dark:border-gray-800 shadow-2xl rounded-3xl p-4 flex items-center gap-6">
 
                 {/* Section Infos */}

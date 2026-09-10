@@ -51,9 +51,9 @@ export default function SideMobile() {
     ]
 
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="flex flex-col h-auto">
     <main className="flex-1 p-1 text-white relative">
-      <div className="w-full h-full bg-[#1B2945] rounded-2xl">
+      <div className="w-full h-auto bg-[#1B2945] rounded-2xl">
         <div className="w-full flex flex-row justify-between items-center p-1">
             <div className="flex flex-col items-center justify-center select-none pointer-events-none opacity-90">
                 <div className="relative w-6 h-6 mb-0.5 transition-transform duration-500 hover:rotate-12">

@@ -41,7 +41,7 @@ export default function PianoBase() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full">
+    <div className="hidden lg:block flex flex-col items-center justify-center p-4 w-full">
       
       {/* Bouton de contrôle */}
       <div className="fixed mb-[40%] right-4 z-50 flex flex-col items-end">

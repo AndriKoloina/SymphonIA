@@ -14,7 +14,7 @@ import {
   CpuChipIcon 
 } from "@heroicons/react/24/outline";
 import StatisticCard from "@/components/ui/StatisticCard";
-
+import SideMobile from "@/components/ui/mobile/bar_options";
 export default function HomePage() {
   const router = useRouter()
 
@@ -74,10 +74,15 @@ export default function HomePage() {
   ]
 
   return(
-    <div className="flex min-h-screen">
-      <SymphoniaSidebar/>
-      <main className="flex-1 ml-80 mt-4">
-        <div className="flex">
+    <div className="flex flex-col min-h-screen lg:flex-row">
+      <div className="hidden lg:block">
+        <SymphoniaSidebar/>
+      </div>
+      <div className="block lg:hidden">
+        <SideMobile/>
+      </div>
+      <main className="flex-1 ml-0  lg:ml-80 mt-4 px-4 sm:px-6 lg:px-8 pb-10 lg:mt-[1%]">
+        <div className="hidden lg:flex justify-between items-center mb-6">
           <TitlePage
           title="accueil"
         />
@@ -89,9 +94,8 @@ export default function HomePage() {
         />
         
         </div>
-        <h1 className="text-l font-black text-white/100 tracking-tight leading-tight mb-4 break-words">Tableau de bord</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          
+        <h1 className="text-xs lg:text-lg font-black text-white/100 tracking-tight leading-tight mb-2 lg:mb-4 break-words">Tableau de bord</h1>
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {cardContainer.map((card) => (
               <StatCard 
                 title = {card.title}
@@ -102,7 +106,7 @@ export default function HomePage() {
             ))}
         </div>
         <div  className="top- left-0 mt-4 rounded-xl">
-          <h1 className="text-l font-black text-white/100 tracking-tight leading-tight mb-4 break-words">Fréquence d'utilisation</h1>
+          <h1 className="text-xs lg:text-lg font-black text-white/100 tracking-tight leading-tight mb-4 break-words">Fréquence d'utilisation</h1>
           <StatisticCard/>
         </div>
       </main>

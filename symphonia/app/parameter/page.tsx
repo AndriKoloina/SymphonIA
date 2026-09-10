@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import SymphoniaSidebar from "@/components/ui/Side-bar-modern";
 import { TitlePage } from "@/components/ui/TitlePage";
+import SideMobile from '@/components/ui/mobile/bar_options';
 import axios from 'axios';
 
 export default function SettingsPage() {
@@ -53,14 +54,19 @@ export default function SettingsPage() {
     };
 
     return (
-            <div className="flex min-h-screen">
-                <SymphoniaSidebar />
+            <div className="flex-1 lg:flex min-h-screen">
+                <div className='hidden lg:block'>
+                    <SymphoniaSidebar />
+                </div>
+                <div className='block lg:hidden'>
+                    <SideMobile/>
+                </div>
                 <main className="flex-1 mt-[-2rem] lg:ml-[18%] p-6 md:p-12 flex flex-col items-center">
                      <TitlePage title="Paramètres" />
-                    <div className="w-full max-w-2xl">
+                    <div className=" w-sm lg:w-full max-w-2xl">
                         
                         <div className="mt-8 bg-[#1B2945] p-8 rounded-3xl border border-white/5 shadow-2xl">
-                            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-2">
+                            <h2 className="text-sm lg:text-xl font-bold text-white mb-8 flex items-center gap-2">
                                 <span className="w-2 h-6 bg-purple-500 rounded-full"></span>
                                 Informations du compte
                             </h2>
@@ -73,7 +79,7 @@ export default function SettingsPage() {
                                         type="text" 
                                         value={user.username}
                                         onChange={(e) => setUser({...user, username: e.target.value})}
-                                        className="w-full bg-[#0f0a1e]/50 border border-white/10 rounded-xl p-3.5 text-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all shadow-inner"
+                                        className="w-full bg-[#0f0a1e]/50 border border-white/10 rounded-xl p-3.5 text-white text-xs lg:text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all shadow-inner"
                                     />
                                 </div>
 
@@ -84,7 +90,7 @@ export default function SettingsPage() {
                                         type="email" 
                                         value={user.email}
                                         readOnly
-                                        className="w-full font-bold bg-[#0f0a1e]/50 border border-white/10 rounded-xl p-3.5 text-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all shadow-inner"
+                                        className="w-full font-bold bg-[#0f0a1e]/50 border border-white/10 text-xs lg:text-sm rounded-xl p-3.5 text-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all shadow-inner"
                                     />
                                 </div>
 
@@ -99,7 +105,7 @@ export default function SettingsPage() {
                                             placeholder="••••••••"
                                             value={passwords.new}
                                             onChange={(e) => setPasswords({...passwords, new: e.target.value})}
-                                            className="w-full bg-[#0f0a1e]/50 border border-white/10 rounded-xl p-3.5 text-white focus:border-purple-500 outline-none transition-all"
+                                            className="w-full bg-[#0f0a1e]/50 border border-white/10 rounded-xl p-3.5 text-white text-xs lg:text-sm focus:border-purple-500 outline-none transition-all"
                                         />
                                     </div>
                                     <div>
@@ -109,7 +115,7 @@ export default function SettingsPage() {
                                             placeholder="••••••••"
                                             value={passwords.confirm}
                                             onChange={(e) => setPasswords({...passwords, confirm: e.target.value})}
-                                            className={`w-full bg-[#0f0a1e]/50 border ${passwords.confirm && passwords.new !== passwords.confirm ? 'border-red-500' : 'border-white/10'} rounded-xl p-3.5 text-white focus:outline-none transition-all`}
+                                            className={`w-full bg-[#0f0a1e]/50 border ${passwords.confirm && passwords.new !== passwords.confirm ? 'border-red-500' : 'border-white/10'} rounded-xl p-3.5 text-white focus:outline-none transition-all text-xs lg:text-sm`}
                                         />
                                     </div>
                                 </div>
@@ -122,10 +128,10 @@ export default function SettingsPage() {
                                 )}
 
                                 {/* Bouton de validation */}
-                                <div className="flex justify-center w-full mt-10">
+                                <div className="flex justify-center w-full lg:mt-10">
                                     <button 
                                         type="submit"
-                                        className="w-1/2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-4 px-6 rounded-xl transition-all transform active:scale-95 shadow-lg shadow-purple-500/20"
+                                        className="lg:w-1/2 text-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-4 px-6 rounded-xl transition-all transform active:scale-95 shadow-lg shadow-purple-500/20"
                                     >
                                         Mettre à jour mon profil
                                     </button>

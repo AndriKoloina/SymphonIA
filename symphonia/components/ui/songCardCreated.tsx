@@ -2,7 +2,7 @@ import { MusicalNoteIcon, PlayIcon } from "@heroicons/react/24/outline"
 
 export default function SongCardCreated({ title, duration, dateCreated, onPlay }: any) {
     return (
-        <div className="group relative flex flex-col w-full max-w-1 md:max-w-25 mx-auto snap-start">
+        <div className="hidden lg:block group relative flex flex-col w-full max-w-1 md:max-w-25 mx-auto snap-start">
             <div className="relative aspect-square mb-3 overflow-hidden rounded-2xl bg-white/5 dark:bg-zinc-900/50 border border-zinc-200/50 dark:border-white/10 transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(168,_85,_247,_0.25)] group-hover:-translate-y-2">
                 
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-all duration-300 z-10 flex items-center justify-center">

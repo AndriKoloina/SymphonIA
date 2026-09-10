@@ -5,15 +5,13 @@ import { ScrollSectionPage } from "@/types/play_interface"
 
 export function ScrollSectionnal({ title, children }: ScrollSectionPage) {
     return (
-      <div className="mb-12 w-full flex flex-col border border-zinc-200/50 dark:border-white/5 rounded-3xl bg-zinc-50/50 dark:bg-zinc-900/30 overflow-hidden ">
-            
+      <div className="hidden lg:block ml-[9%] lg:ml-0 mt-4 lg:mt-0 mb-12 w-[90%] lg:w-full h-[50%] lg:h-auto flex flex-col border border-zinc-200/50 dark:border-white/5 rounded-3xl bg-zinc-50/50 dark:bg-zinc-900/30 overflow-hidden ">
             <div className="p-6 pb-2">
                 <div className="flex items-end justify-between mb-4">
                     <div className="space-y-1">
                         <h2 className="text-xl md:text-2xl font-black text-zinc-900 dark:text-white tracking-tight">
                             {title}
                         </h2>
-                        <div className="h-1 w-10 bg-purple-600 rounded-full" />
                     </div>
                 </div>
             </div>

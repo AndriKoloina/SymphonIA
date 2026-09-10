@@ -18,7 +18,7 @@ export default function LoginForm() {
     }
 
     const Api_url = process.env.NEXT_PUBLIC_API_URL || 
-(typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.hostname}:8000` : 'http://localhost:8000')
+(typeof window !== 'undefined' ? `${window.location.protocol}//...` : 'http://localhost:8000')
     
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
