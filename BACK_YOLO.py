@@ -14,11 +14,11 @@ from ultralytics import YOLO
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.makedirs("temp_data", exist_ok=True)
 
-model_path = os.path.join(
-    script_dir, "runs", "detect", "train-4", "weights", "best.pt"
-)
+model_path = os.path.join(script_dir, "best.pt")
+
 if not os.path.exists(model_path):
-  model_path = "/home/zanahary/Documents/Projet python/SYMPHONAIv2.0/runs/detect/train-4/weights/best.pt"
+  print(f"❌ Erreur : Le fichier 'best.pt' est introuvable à côté du script : {model_path}")
+  sys.exit(1)
 
 model = YOLO(model_path)
 
