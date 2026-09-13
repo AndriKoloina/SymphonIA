@@ -28,7 +28,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_methods=["*"],  # Autoriser toutes les méthodes HTTP  
     allow_headers=["*"],  # Autoriser tous les headers
-    allow_credentials=False,  # Autoriser les cookies et les credentials
+    allow_credentials=True,  # Autoriser les cookies et les credentials
 )
 
 db_configs = {
