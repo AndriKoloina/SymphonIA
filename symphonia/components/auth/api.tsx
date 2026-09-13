@@ -6,7 +6,7 @@ const api = axios.create({
 
 // Cet intercepteur ajoute le token à CHAQUE requête automatiquement
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // Ou ta méthode de stockage
+  const token = localStorage.getItem('symphonia_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

@@ -3,7 +3,7 @@
 import Input from "@/components/ui/Input"
 import { useRouter } from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react"
-import axios from "axios"
+import api from "@/components/auth/api"
 
 export default function SignupForm() {
     // Mise à jour de l'état pour inclure tous les champs
@@ -35,7 +35,7 @@ export default function SignupForm() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/register', {
+            const response = await api.post('/register', {
                 email : formData.email,
                 username: formData.username,
                 password: formData.password
@@ -46,9 +46,10 @@ export default function SignupForm() {
                 router.push('/auth/login')
             }
            
-        } catch (err: any){
-            if (err.response && err.response.data) {
-            setError(err.response.data.detail || "Erreur lors de l'inscription")
+        } catch (err: unknown){
+            const apiError = err as { response?: { data?: { detail?: string } } }
+            if (apiError.response && apiError.response.data) {
+            setError(apiError.response.data.detail || "Erreur lors de l'inscription")
         } else {
             setError("Le serveur est injoignable")
         }

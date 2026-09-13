@@ -1,8 +1,15 @@
 'use client'
 
-import { DocumentIcon, PlayIcon, ArrowPathIcon, EyeIcon } from "@heroicons/react/24/outline"
+import { PlayIcon, ArrowPathIcon, EyeIcon } from "@heroicons/react/24/outline"
 
-export default function SongCardScanned({ title, duration, dateCreated, onPlay }: any) {
+interface SongCardScannedProps {
+  title: string
+  duration: string
+  dateCreated: string
+  onPlay: () => void
+}
+
+export default function SongCardScanned({ title, duration, dateCreated, onPlay }: SongCardScannedProps) {
     return (
         <div 
             onClick={onPlay}

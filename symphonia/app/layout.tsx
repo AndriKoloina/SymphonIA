@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
+import { SidebarProvider } from "@/components/ui/SidebarContext";
 
 export const metadata: Metadata = {
   title: "symphonia",
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html>
       <ProtectedRoutes>
-        <body>{children}</body>
+        <body><SidebarProvider>{children}</SidebarProvider></body>
       </ProtectedRoutes> 
     </html>
   );

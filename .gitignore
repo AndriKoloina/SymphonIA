@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# App settings
+appsettings*
+
+# Node modules
+node_modules/
+.next/
+out/
+
+# Environment
+.env
+.env.local

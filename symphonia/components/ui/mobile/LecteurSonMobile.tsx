@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useRef, useEffect } from "react"
-import { PlayIcon, PauseIcon, BackwardIcon, ForwardIcon, ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
+import { PlayIcon, PauseIcon, BackwardIcon, ForwardIcon } from "@heroicons/react/24/outline";
 
 interface LecteurSonProps {
     title: string;
@@ -10,7 +10,7 @@ interface LecteurSonProps {
     setIsPlaying: (playing: boolean) => void;
 }
 
-export default function LecteurSonMobile({ title, duration, url, isPlaying, setIsPlaying }: LecteurSonProps) {
+export default function LecteurSonMobile({ title, duration, isPlaying, setIsPlaying }: LecteurSonProps) {
     const [currentTime, setCurrentTime] = useState(0)
     const svgRef = useRef<SVGSVGElement>(null)
     const [bars, setBars] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -84,7 +84,7 @@ export default function LecteurSonMobile({ title, duration, url, isPlaying, setI
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setBars(bars.map(() => Math.floor(Math.random() * 70) + 20))
+            setBars((prev) => prev.map(() => Math.floor(Math.random() * 70) + 20))
         }, 200)
         return() => clearInterval(interval)
     }, [])

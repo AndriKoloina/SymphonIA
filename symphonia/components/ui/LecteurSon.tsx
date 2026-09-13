@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { PlayIcon, PauseIcon, BackwardIcon, ForwardIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
-import type { SongCardProps } from '@/types/play_interface';
 
 interface LecteurSonProps {
     title: string ;
@@ -16,17 +15,19 @@ export default function LecteurSon({ title, duration, isPlaying, setIsPlaying }:
     const [currentTime, setCurrentTime] = useState(0)
     const [volume, setVolume] = useState(70) // État pour le volume dynamique (0-100)
 
-    // Reset du temps quand on change de chanson
-    useEffect(() => {
+    // Reset du temps quand on change de chanson (ajustement pendant le rendu)
+    const [prevTitle, setPrevTitle] = useState(title)
+    if (title !== prevTitle) {
+        setPrevTitle(title)
         setCurrentTime(0)
-    }, [title])
+    }
 
     const parseDuration = (dur: string) => {
         if (!dur || !dur.includes(":")) return 0
         try {
             const parts = dur.split(":")
             return (Number(parts[0]) || 0) * 60 + (Number(parts[1]) || 0)
-        } catch (error) {
+        } catch {
             return 0
         }
     };

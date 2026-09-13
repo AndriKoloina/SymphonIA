@@ -1,9 +1,6 @@
-import Reac from "react"
 import type { UserProfileProps } from "@/types/play_interface"
 
-interface UserProfile extends UserProfileProps {}
-
-export default function UserProfile({ profilePicture, username, email }: UserProfile) {
+export default function UserProfile({ profilePicture, username, email }: UserProfileProps) {
     return(
         <div className="hidden lg:flex item gap-3 mr-[1rem] mb-5">
             <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-indigo-600 to-fuchsia-600 p-[2px]">

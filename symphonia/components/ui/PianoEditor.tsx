@@ -40,8 +40,8 @@ export default function PianoEditor({
         {octave_structure.map((item, index) => (
           <div 
             key={`${item.note}-${index}`} 
-            className={`flex-1 flex items-center justify-end pr-2 text-[10px] font-bold border-b border-slate-800/50
-              ${item.isBlack ? 'bg-black text-gray-500' : 'bg-white text-gray-800'}`}
+            className={`flex-1 flex items-center justify-end pr-2 text-[10px] font-bold border-b border-slate-700/50
+              ${item.isBlack ? 'bg-black text-slate-300' : 'bg-white text-slate-700'}`}
           >
             {item.note}
           </div>

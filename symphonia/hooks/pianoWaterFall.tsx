@@ -3,8 +3,18 @@
 import React from 'react'
 import FallingNote from '@/hooks/pianoNote'
 
+export interface FallingNoteData {
+  id: string
+  noteId?: string
+  leftPosition: number
+  width?: number
+  duration?: number
+  isBlack?: boolean
+  color?: string
+}
+
 interface PianoWaterFallProps {
-  activeNotes: any[]
+  activeNotes: FallingNoteData[]
   totalWidth: number
 }
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 // props pour recevoir le state du parent (StudioPage)
 interface GuitarEditorProps {
@@ -19,14 +19,17 @@ export default function GuitarEditor({ placedNotes, setPlacedNotes }: GuitarEdit
 
   const fretCount = 14;
   const [activeNote, setActiveNote] = useState<{ s: number; f: number } | null>(null);
+  // Compteur d'identifiants uniques (évite les fonctions impures pendant le rendu)
+  const noteCounter = useRef(0);
 
   const handlePress = (sIdx: number, fIdx: number) => {
     // 1. Calcul de la note MIDI (Fréquence)
     // La note est la racine de la corde + le numéro de la frette
     const midiNote = STRINGS_DATA[sIdx].root + fIdx;
 
-    // 2. Enregistrement dans le Studio (on utilise x=0 pour l'instant ou un index de temps)
-    const newNote = { x: Date.now(), y: midiNote };
+    // 2. Enregistrement dans le Studio (identifiant unique via compteur)
+    noteCounter.current += 1;
+    const newNote = { x: noteCounter.current, y: midiNote };
     setPlacedNotes([...placedNotes, newNote]);
 
     // 3. Animation visuelle

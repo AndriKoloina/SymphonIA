@@ -7,7 +7,6 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { RechartsDevtools } from "@recharts/devtools";
 export default function StatisticCard() {
   const data = [
     { mois: "Jan", frequence: 45 },
@@ -49,44 +48,39 @@ export default function StatisticCard() {
         bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.12)" vertical={false} />
       <XAxis
         dataKey="mois"
-        stroke="var(--color-text-4)"
-        tick={{ fontSize: 14 }}
+        stroke="#a78bfa"
+        tick={{ fontSize: 13, fill: "#ddd6fe" }}
       />
-      <YAxis width="auto" stroke="var(--color-text-3)" />
+      <YAxis width="auto" stroke="#a78bfa" tick={{ fontSize: 13, fill: "#ddd6fe" }} />
       <Tooltip
         cursor={{
-          stroke: "var(--color-border-3)",
+          stroke: "#a78bfa",
         }}
         contentStyle={{
-          backgroundColor: "var(--color-surface-raised)",
-          borderColor: "var(--color-border-2)",
+          backgroundColor: "#1e1b4b",
+          borderColor: "#7c3aed",
+          color: "#fff",
           fontSize: 14,
+          borderRadius: "0.75rem",
         }}
+        labelStyle={{ color: "#fff" }}
       />
-      <Legend wrapperStyle={{ fontSize: 14 }} />
+      <Legend wrapperStyle={{ fontSize: 14, color: "#e0e7ff" }} />
       <Line
         type="monotone"
         dataKey="frequence"
-        stroke="var(--color-button)"
+        name="Fréquence"
+        stroke="#a78bfa"
+        strokeWidth={3}
         dot={{
           fill: "#fff",
+          stroke: "#7c3aed",
         }}
-        activeDot={{ r: 8, stroke: "var(--color-surface-base)" }}
+        activeDot={{ r: 7, fill: "#fff", stroke: "#7c3aed" }}
       />
-      <Line
-        type="monotone"
-        dataKey="mois"
-        stroke="#3b82f6"
-        dot={{
-          fill: "#fff",
-        }}
-        activeDot={{ stroke: "var(--color-surface-base)" }}
-      />
-
-      <RechartsDevtools />
     </LineChart>
   );
 }

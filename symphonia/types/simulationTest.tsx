@@ -1,7 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
+import type { FallingNoteData } from '@/hooks/pianoWaterFall'
 
-export function useMusicSimulation(allKeys: any[]) {
-  const [fallingNotes, setFallingNotes] = useState<any[]>([])
+export interface PianoKey {
+  note: string
+  octave: number
+  isBlack: boolean
+}
+
+export function useMusicSimulation(allKeys: PianoKey[]) {
+  const [fallingNotes, setFallingNotes] = useState<FallingNoteData[]>([])
   const [activePianoNotes, setActivePianoNotes] = useState<string[]>([])
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 

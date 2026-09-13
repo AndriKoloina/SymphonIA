@@ -1,6 +1,5 @@
 import type { TitlePageProps } from "@/types/play_interface"
 
-interface TitlePage extends TitlePageProps {}
 export const TitlePage = ({ title }: TitlePageProps) => {
     return (
         <div className="  hidden w-full lg:flex items-right justify-right italic mb-5">

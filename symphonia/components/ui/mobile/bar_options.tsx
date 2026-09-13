@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { OptionsMenuMobile } from "@/hooks/menu"
 import { usePathname } from "next/navigation"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
@@ -13,20 +13,15 @@ export default function SideMobile() {
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
 
-    const [user, setUser] = useState<{username: string; email: string} | null>(null)
-
-    useEffect(() => {
-      const token = localStorage.getItem('symphonia_token')
-      const storedUser = localStorage.getItem('symphonia_user')
-
-      if(!token || !storedUser) {
-        router.push('/auth/login')
+    const [user] = useState<{username: string; email: string} | null>(() => {
+      try {
+        const token = localStorage.getItem('symphonia_token')
+        const storedUser = localStorage.getItem('symphonia_user')
+        return (token && storedUser) ? JSON.parse(storedUser) : null
+      } catch {
+        return null
       }
-      else{
-        setUser(JSON.parse(storedUser))
-      }
-
-    }, [router])
+    })
 
     const navigateTo = () => {
     router.push("/parameter")
@@ -65,12 +60,13 @@ export default function SideMobile() {
                 <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent mt-0.5"></div>
             </div>
           {/* 2. Au clic, on inverse la valeur de isOpen (true/false) */}
-        <button 
+        <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-gray-700 hover:text-black transition-colors rounded-lg hover:bg-black/5 relative z-50"
+            aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            className="p-2 text-white hover:text-purple-200 transition-colors rounded-lg hover:bg-white/10 relative z-50"
           >
             {/* Si le menu est ouvert, on affiche la croix X, sinon les 3 barres */}
-            {isOpen ? <XMarkIcon className="w-8 h-8 text-white/50" /> : <Bars3Icon className="w-8 h-8 text-white/50" />}
+            {isOpen ? <XMarkIcon className="w-8 h-8 text-white" /> : <Bars3Icon className="w-8 h-8 text-white" />}
           </button>
         </div>
 
@@ -84,20 +80,19 @@ export default function SideMobile() {
               </div>
               <h1 className="text-sm font-medium text-white/95 truncate">{user?.username}</h1>
             </div>
-              {burgerOptions.map((option, index) => {
+              {burgerOptions.map((option) => {
                 const Icon = option.icon
                 return (
-                  <div className="flex flex hover:text-purple-500">
+                  <div key={option.label} className="flex flex hover:text-purple-500">
                       <button
-                      key={index}
                   onClick={() => {
                     option.onclick()  
                     setIsOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-2.5 flex text-xs rounded-lg transition-colors ${
-                    option.danger 
-                      ? 'text-red-400 hover:bg-red-500/10' 
-                      : 'text-white/90 hover:bg-white/10'
+                  className={`w-full text-left px-4 py-2.5 flex text-xs font-medium rounded-lg transition-colors ${
+                    option.danger
+                      ? 'text-red-300 hover:bg-red-500/15 hover:text-red-200'
+                      : 'text-slate-100 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                    <Icon className="w-6 hover:text-purple-500"/>
@@ -139,13 +134,13 @@ export default function SideMobile() {
             <span className="absolute -top-1 w-12 h-12 bg-purple-500/20 rounded-full blur-md animate-pulse" />
           )}
 
-          <Icon 
+          <Icon
             className={`w-7 h-7 transition-all duration-300 relative z-10 ${
-              isActive 
-                ? 'scale-110 text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]' 
+              isActive
+                ? 'scale-110 text-purple-300 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]'
                 : isHighlighted
                 ? 'text-white scale-105'
-                : 'text-gray-400'
+                : 'text-slate-200'
             }`}
           />
 

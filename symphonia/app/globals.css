@@ -2,14 +2,17 @@
 
 /* 1. Définition unique des couleurs (Plus de mode sombre ici) */
 :root {
-  --background: #17083F;
-  --foreground: #ffffff;
-  --color-side-bar-2 : #1A1F2B;
-  --color-side-bar-1 : #D9D9D9;
-  --background-side-bar: #1B2945;
-  --color-button: #8A2BE2;
-  --color-button-side-bar: #6F6CE0;
-  --color-falling-barre : #FF0098;
+  --background: #150833;
+  --foreground: #f4f1ff;
+  --color-text-muted: #cbd5e1;
+  --color-text-faint: #94a3b8;
+  --color-side-bar-2 : #1e2540;
+  --color-side-bar-1 : #2a3358;
+  --background-side-bar: #1b2340;
+  --color-button: #8a2be2;
+  --color-button-side-bar: #7c6cf0;
+  --color-falling-barre : #ff0098;
+  color-scheme: dark;
 }
 
 /* 2. Mapping Tailwind v4 */
@@ -23,9 +26,21 @@
 /* 3. Style de base du corps de page */
 body {
   background-color: var(--background);
+  background-image: radial-gradient(circle at 20% 0%, rgba(138, 43, 226, 0.22), transparent 45%),
+    radial-gradient(circle at 90% 30%, rgba(255, 0, 152, 0.12), transparent 40%);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+}
+
+::selection {
+  background: rgba(138, 43, 226, 0.6);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
 }
 
 /* 4. Animations */

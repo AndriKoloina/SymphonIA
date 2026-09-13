@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg
 import bcrypt
 import jwt
 from datetime import datetime, timedelta
@@ -19,8 +19,10 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "http://desktop-9tf6lvh.local:3000",
-    "http://172.20.10.2:3000"
+    "http://172.20.10.2:3000",
+    "http://192.168.56.1:3000"
 ]
 
 app.add_middleware(
@@ -33,9 +35,9 @@ app.add_middleware(
 
 db_configs = {
     "host" : "localhost",
-    "database": "symphoniaDb",
+    "dbname": "symphoniaDb",
     "user": "postgres",
-    "password": "0000"
+    "password": "Tsilavina26"
 }
 
 class UserAuth(BaseModel):
@@ -55,12 +57,12 @@ class UserUpdate(BaseModel):
 
 def connect_db():
     try:
-        conn = psycopg2.connect(
+        conn = psycopg.connect(
             host="127.0.0.1",
-            database="symphoniaDb",
+            dbname="symphoniaDb",
             user="postgres",
-            password="0000",
-            port="5432" # Port par défaut de Postgres
+            password="Tsilavina26",
+            port=5432
         )
         return conn
     except Exception as e:
@@ -105,7 +107,7 @@ async def register(user: UserAuth):
         cur.execute("INSERT INTO utilisateurs (email, mdp, username) VALUES (%s, %s, %s)", (user.email, mdp_hashe, user.username))
         conn.commit()
         return {"status": "success", "message": "Compte créé !"}
-    except psycopg2.errors.UniqueViolation:
+    except psycopg.errors.UniqueViolation:
         raise HTTPException(status_code=400, detail="Email déjà utilisé")
     finally:
         cur.close()
@@ -209,10 +211,98 @@ async def update_profile(
 #route de déconnexion
 @app.post("/logout")
 async def logout():
-    # Ici, on peut simplement retourner un message de succès. 
-    # Côté client, il faudra supprimer le token stocké pour "déconnecter" l'utilisateur.
     return {"status": "success", "message": "Déconnecté"}
 
 
-# Lancer avec : uvicorn nom_du_fichier:app --reload
+# ===== ROUTES CRUD =====
 
+# Lister tous les utilisateurs
+@app.get("/users")
+async def get_users():
+    conn = connect_db()
+    cur = conn.cursor()
+    cur.execute("SELECT id, email, username FROM utilisateurs")
+    users = [{"id": row[0], "email": row[1], "username": row[2]} for row in cur.fetchall()]
+    cur.close()
+    conn.close()
+    return users
+
+
+# Récupérer un utilisateur par ID
+@app.get("/users/{user_id}")
+async def get_user(user_id: int):
+    conn = connect_db()
+    cur = conn.cursor()
+    cur.execute("SELECT id, email, username FROM utilisateurs WHERE id = %s", (user_id,))
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+    if not row:
+        raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+    return {"id": row[0], "email": row[1], "username": row[2]}
+
+
+# Modifier un utilisateur par ID
+@app.put("/users/{user_id}")
+async def update_user(user_id: int, user_update: UserUpdate):
+    conn = connect_db()
+    cur = conn.cursor()
+
+    try:
+        updates = []
+        params = []
+
+        if user_update.username:
+            updates.append("username = %s")
+            params.append(user_update.username)
+
+        if user_update.email:
+            updates.append("email = %s")
+            params.append(user_update.email)
+
+        if user_update.new_password:
+            hash_pw = bcrypt.hashpw(user_update.new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            updates.append("mdp = %s")
+            params.append(hash_pw)
+
+        if not updates:
+            raise HTTPException(status_code=400, detail="Aucune donnée à modifier")
+
+        params.append(user_id)
+        cur.execute(f"UPDATE utilisateurs SET {', '.join(updates)} WHERE id = %s", tuple(params))
+
+        if cur.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+
+        conn.commit()
+        return {"status": "success", "message": "Utilisateur mis à jour"}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail="Erreur lors de la mise à jour")
+    finally:
+        cur.close()
+        conn.close()
+
+
+# Supprimer un utilisateur par ID
+@app.delete("/users/{user_id}")
+async def delete_user(user_id: int):
+    conn = connect_db()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM utilisateurs WHERE id = %s", (user_id,))
+
+    if cur.rowcount == 0:
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"status": "success", "message": "Utilisateur supprimé"}
+
+
+# Lancer avec : uvicorn backend.authentification:app --reload

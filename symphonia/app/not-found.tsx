@@ -1,9 +1,17 @@
 "use client"
 
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+
+// Particules décoratives générées une seule fois au chargement du module
+const PARTICLES = [...Array(15)].map((_, i) => ({
+  id: i,
+  x: (i * 137) % 1920,
+  y: (i * 251) % 1080,
+  duration: 5 + (i % 5),
+  delay: (i % 5) * 0.8,
+}))
 
 export default function Custom404() {
    const router = useRouter()
@@ -37,13 +45,13 @@ export default function Custom404() {
            style={{ backgroundImage: 'linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       
       {/* Particules */}
-      {[...Array(15)].map((_, i) => (
+      {PARTICLES.map((p) => (
         <motion.div
-          key={i}
+          key={p.id}
           className="absolute bg-indigo-500/30 w-1 h-1 rounded-full pointer-events-none"
-          initial={{ x: Math.random() * 1920, y: Math.random() * 1080 }}
+          initial={{ x: p.x, y: p.y }}
           animate={{ y: [null, -100, -200], opacity: [0, 0.7, 0] }}
-          transition={{ duration: Math.random() * 5 + 5, repeat: Infinity, ease: "linear", delay: Math.random() * 5 }}
+          transition={{ duration: p.duration, repeat: Infinity, ease: "linear", delay: p.delay }}
         />
       ))}
 

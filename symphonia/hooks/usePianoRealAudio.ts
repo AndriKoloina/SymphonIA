@@ -19,7 +19,9 @@ const NOTE_OFFSETS: Record<string, number> = {
   'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
 }
 
-export function formatNoteId(noteInput: any): string {
+export type NoteInput = string | { note: string; octave: number | string }
+
+export function formatNoteId(noteInput: NoteInput): string {
   if (typeof noteInput === 'string') return noteInput
   if (noteInput && typeof noteInput === 'object') {
     return `${noteInput.note}${noteInput.octave}`
@@ -40,7 +42,7 @@ export function usePianoRealAudio() {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
     const ctx = new AudioCtx()
     audioCtxRef.current = ctx
 
@@ -68,7 +70,7 @@ export function usePianoRealAudio() {
     return () => { ctx.close() }
   }, [])
 
-  const playNote = (rawNote: any) => {
+  const playNote = (rawNote: NoteInput) => {
     const noteId = formatNoteId(rawNote)
     if (!noteId || !audioCtxRef.current || audioBuffersRef.current.size === 0) return
 

@@ -68,7 +68,7 @@ export default function PianoBase() {
       {/* Piano (Structure et styles neutres d'origine, totalement fixe) */}
       <div className="inline-block bg-[#0F172A] p-2 rounded-t-lg rounded-b-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] border-t-8 border-[#1e293b]">
         <div className="mb-2 text-center">
-          <span className="text-[9px] text-white/20 tracking-[0.5em] uppercase font-bold italic">
+          <span className="text-[9px] text-slate-300 tracking-[0.5em] uppercase font-bold">
             SymphonIA Piano
           </span>
         </div>

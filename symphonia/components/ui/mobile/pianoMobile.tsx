@@ -1,13 +1,10 @@
 'use client'
 
-import { useState, useMemo } from "react"
-import { generateKeys } from "@/hooks/pianoNote"
-import PianoWaterFall from "@/hooks/pianoWaterFall"
-import PlayButton from "../playButton"
-import { useMusicSimulation } from "@/types/simulationTest"
-
 
 export default function PianoMobile() {
+  // Piano mobile désactivé pour le moment (implémentation commentée ci-dessous).
+  // Retourne null pour garder la page scanner fonctionnelle sur mobile.
+  return null;
   //    const allKeys = useMemo(() => generateKeys(), [])
   //   const [isPlaying, setIsPlaying] = useState(false)
   //   const { activeNotes, startSimulation, stopSimulation } = useMusicSimulation(allKeys)

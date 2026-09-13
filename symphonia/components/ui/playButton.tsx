@@ -1,9 +1,7 @@
 'use client'
 import type { PlayButtonInterface } from "@/types/play_interface"
 
-interface PlayButton extends PlayButtonInterface {}
-
-export default function PlayButton({isPlaying, onToggle, label= "Mélodie"} : PlayButton) {
+export default function PlayButton({isPlaying, onToggle, label= "Mélodie"} : PlayButtonInterface) {
     return (
     <div className="flex items-center gap-4 p-2 bg-[transparent]/50 rounded-[0.8rem] border border-white/5 backdrop-blur-sm shadow-xl m-5" >
       <button 
