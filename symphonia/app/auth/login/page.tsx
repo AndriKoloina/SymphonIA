@@ -17,8 +17,9 @@ export default function LoginForm() {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const Api_url = process.env.NEXT_PUBLIC_API_URL || 
-(typeof window !== 'undefined' ? `${window.location.protocol}//...` : 'http://localhost:8000')
+//     const Api_url = process.env.NEXT_PUBLIC_API_URL || 
+// (typeof window !== 'undefined' ? `${window.location.protocol}//...` : 'http://localhost:8000')
+const Api_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
     
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
