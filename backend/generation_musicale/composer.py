@@ -163,33 +163,94 @@ def apply_variation(notes: list[dict]) -> list[dict]:
     return varied_notes
 
 
-def generate_transition(dominant_chord: list[int], tempo_bpm: float, beats_per_bar: int = 4) -> tuple[list[dict], float]:
+# --- NOUVEAU MOTEUR DE TRANSITIONS ET PRÉ-REFRAINS ---
+
+def generate_transition(key: str, mode: str, genre: str, emotion: str,
+                        tempo_bpm: float, beats_per_bar: int = 4) -> tuple[list[dict], float, list[str], list[list[int]]]:
+    """
+    Génère une transition dynamique et variée vers le refrain.
+    Renvoie: (notes, dur_sec, romans_list, chords_midi_list)
+    """
+    from theory import roman_to_chord, scale_notes
+    from genre_styles import get_genre_settings
+
+    # Choix du type de transition
+    types_possibles = ['silence_break', 'pre_chorus_chords', 'melodic_pickup', 'pedal_crescendo', 'direct']
+    
+    # Biais par émotion / genre
+    if emotion == 'calme':
+        transition_type = random.choice(['direct', 'melodic_pickup', 'silence_break'])
+    elif emotion in ('energique', 'joyeux'):
+        transition_type = random.choice(['pedal_crescendo', 'pre_chorus_chords', 'silence_break'])
+    else: # triste, etc.
+        transition_type = random.choice(['pre_chorus_chords', 'melodic_pickup', 'direct'])
+
     notes = []
-    beat_cursor = 0.0
-    pitches_to_climb = sorted(dominant_chord + [p + 12 for p in dominant_chord] + [p + 24 for p in dominant_chord])
-    pitch_idx = 0
+    duration_beats = 4.0 # 1 mesure
+    
+    # 1. SILENCE / BREAK (Coupure d'impact avant le refrain)
+    if transition_type == 'silence_break':
+        dominant_chord = roman_to_chord('V', key, mode)
+        dur_sec = beats_to_seconds(1.5, tempo_bpm)
+        # Un seul accord plaqué au début de la mesure, puis silence total
+        for p in dominant_chord[:3]:
+            notes.append({'pitch': p, 'start_time': 0.0, 'duration': dur_sec, 'velocity': 75, 'hand': 'right'})
+            notes.append({'pitch': p - 12, 'start_time': 0.0, 'duration': dur_sec, 'velocity': 70, 'hand': 'left'})
+        return notes, beats_to_seconds(duration_beats, tempo_bpm), ['V'], [dominant_chord]
 
-    while beat_cursor < beats_per_bar:
-        tension_vel = int(70 + (beat_cursor / beats_per_bar) * 45)
-        pitch = pitches_to_climb[pitch_idx % len(pitches_to_climb)]
+    # 2. PRÉ-REFRAIN HARMONIQUE (Progression d'accords courte : IV -> V ou ii -> V)
+    elif transition_type == 'pre_chorus_chords':
+        romans = ['iv', 'V'] if mode == 'minor' else ['IV', 'V']
+        chords_midi = [roman_to_chord(r, key, mode) for r in romans]
+        
+        for i, chord in enumerate(chords_midi):
+            start_beat = i * 2.0
+            start_sec = beats_to_seconds(start_beat, tempo_bpm)
+            dur_sec = beats_to_seconds(1.8, tempo_bpm)
+            
+            # Main droite
+            for p in chord:
+                notes.append({'pitch': p, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3), 'velocity': 75 + i*10, 'hand': 'right'})
+            # Main gauche (Basse)
+            notes.append({'pitch': chord[0] - 12, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3), 'velocity': 70 + i*10, 'hand': 'left'})
+            
+        return notes, beats_to_seconds(duration_beats, tempo_bpm), romans, chords_midi
 
-        start_sec = beats_to_seconds(beat_cursor, tempo_bpm)
-        dur_sec = beats_to_seconds(0.4, tempo_bpm)
+    # 3. ANACROUSE / PICKUP MÉLODIQUE (Ligne montante vers la note du refrain)
+    elif transition_type == 'melodic_pickup':
+        scale_type = 'major' if mode == 'major' else 'natural_minor'
+        scale = scale_notes(key, scale_type, 5)
+        dominant_chord = roman_to_chord('V', key, mode)
+        
+        # Basse tenue à la main gauche
+        notes.append({'pitch': dominant_chord[0] - 12, 'start_time': 0.0, 'duration': beats_to_seconds(4.0, tempo_bpm), 'velocity': 65, 'hand': 'left'})
+        
+        # 4 croches montantes sur les temps 3 et 4
+        pickup_pitches = scale[2:6] # ex: D, E, F, G vers C
+        for idx, pitch in enumerate(pickup_pitches):
+            start_beat = 2.0 + (idx * 0.5)
+            start_sec = beats_to_seconds(start_beat, tempo_bpm)
+            dur_sec = beats_to_seconds(0.45, tempo_bpm)
+            notes.append({'pitch': pitch, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3), 'velocity': 70 + idx*8, 'hand': 'right'})
+            
+        return notes, beats_to_seconds(duration_beats, tempo_bpm), ['V'], [dominant_chord]
 
-        notes.append({
-            'pitch': pitch, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3),
-            'velocity': tension_vel, 'hand': 'right'
-        })
-        notes.append({
-            'pitch': dominant_chord[0] - 12, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3),
-            'velocity': tension_vel - 10, 'hand': 'left'
-        })
+    # 4. PEDAL CRESCENDO (Accords répétés en build-up)
+    elif transition_type == 'pedal_crescendo':
+        dominant_chord = roman_to_chord('V', key, mode)
+        for beat in range(4):
+            start_sec = beats_to_seconds(float(beat), tempo_bpm)
+            dur_sec = beats_to_seconds(0.8, tempo_bpm)
+            vel = 65 + beat * 12
+            for p in dominant_chord:
+                notes.append({'pitch': p, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3), 'velocity': vel, 'hand': 'right'})
+            notes.append({'pitch': dominant_chord[0] - 12, 'start_time': round(start_sec, 3), 'duration': round(dur_sec, 3), 'velocity': vel - 5, 'hand': 'left'})
+            
+        return notes, beats_to_seconds(duration_beats, tempo_bpm), ['V'], [dominant_chord]
 
-        beat_cursor += 0.5
-        pitch_idx += 1
-
-    duration_sec = beats_to_seconds(beats_per_bar, tempo_bpm)
-    return notes, duration_sec
+    # 5. DIRECT / SANS COUTURE (Pas de section de transition)
+    else:
+        return [], 0.0, [], []
 
 
 # --- ORCHESTRATEUR PRINCIPAL ---
@@ -238,15 +299,33 @@ def compose(genre: str, emotion: str, key: str = 'C', mode: str = 'minor',
         is_chorus=True, use_lstm_steps=use_lstm_steps, **flags
     )
 
-    transition_notes, transition_dur = generate_transition(trans_chord_midi, tempo_bpm)
+    # --- NOUVEAU : Génération dynamique de la transition ---
+    trans_notes, trans_dur, trans_romans, trans_chords_midi = generate_transition(
+        key=key, mode=mode, genre=genre, emotion=emotion, tempo_bpm=tempo_bpm, beats_per_bar=beats_per_bar
+    )
 
+    # Construction de la structure globale
     structure = [
         ("VERSE", raw_verse_notes, verse_dur, base_romans, chords_midi),
-        ("TRANSITION", transition_notes, transition_dur, [trans_roman], [trans_chord_midi]),
+    ]
+
+    if trans_notes:
+        structure.append(("TRANSITION", trans_notes, trans_dur, trans_romans, trans_chords_midi))
+
+    structure.extend([
         ("CHORUS", raw_chorus_notes, chorus_dur, base_romans, chords_midi),
         ("VERSE_VAR", apply_variation(raw_verse_notes), verse_dur, base_romans, chords_midi),
         ("CHORUS", raw_chorus_notes, chorus_dur, base_romans, chords_midi)
-    ]
+    ])
+    
+    # transition_notes, transition_dur = generate_transition(trans_chord_midi, tempo_bpm)
+    # structure = [
+    #     ("VERSE", raw_verse_notes, verse_dur, base_romans, chords_midi),
+    #     ("TRANSITION", transition_notes, transition_dur, [trans_roman], [trans_chord_midi]),
+    #     ("CHORUS", raw_chorus_notes, chorus_dur, base_romans, chords_midi),
+    #     ("VERSE_VAR", apply_variation(raw_verse_notes), verse_dur, base_romans, chords_midi),
+    #     ("CHORUS", raw_chorus_notes, chorus_dur, base_romans, chords_midi)
+    # ]
 
     final_notes = []
     final_chords_info = []

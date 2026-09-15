@@ -1,98 +1,90 @@
 """
-Bibliothèque de progressions d'accords, indexée par (genre, émotion).
+Bibliothèque de progressions d'accords, indexée par (genre, emotion, mode).
 
-C'est le coeur de la connaissance "théorie musicale" du système.
-Ajoute autant de variantes que tu veux ici : plus il y en a par catégorie,
-plus la génération sera variée d'un appel à l'autre.
+En séparant explicitement les modes 'major' et 'minor', on évite les
+aberrations harmoniques et les dissonances mélodiques.
 """
 import random
 
 PROGRESSIONS = {
-    ('classique', 'triste'): [
-        ['i', 'iv', 'V', 'i'],
-        ['i', 'VI', 'III', 'VII'],
-        ['i', 'iv', 'VII', 'III'],
-        ['i', 'V', 'iv', 'i'],
+    # --- CLASSIQUE ---
+    ('classique', 'triste', 'minor'): [
+        ['i', 'iv', 'V', 'i'], 
+        ['i', 'VI', 'III', 'VII']
     ],
-    ('classique', 'joyeux'): [
-        ['I', 'IV', 'V', 'I'],
-        ['I', 'vi', 'IV', 'V'],
-        ['I', 'V', 'vi', 'IV'],
+    ('classique', 'triste', 'major'): [
+        ['vi', 'iii', 'IV', 'V']
+    ], # Tristesse relative en majeur
+    ('classique', 'joyeux', 'major'): [
+        ['I', 'IV', 'V', 'I'], 
+        ['I', 'vi', 'IV', 'V']
     ],
-    ('classique', 'calme'): [
-        ['I', 'iii', 'IV', 'I'],
-        ['I', 'vi', 'ii', 'V'],
+    ('classique', 'calme', 'major'): [
+        ['I', 'iii', 'IV', 'I'], 
+        ['I', 'vi', 'ii', 'V']
     ],
-    ('pop', 'joyeux'): [
-        ['I', 'V', 'vi', 'IV'],
-        ['I', 'IV', 'V', 'I'],
-        ['vi', 'IV', 'I', 'V'],
+    # --- POP ---
+    ('pop', 'joyeux', 'major'): [
+        ['I', 'V', 'vi', 'IV'], 
+        ['I', 'IV', 'V', 'I']
     ],
-    ('pop', 'triste'): [
-        ['vi', 'IV', 'I', 'V'],
-        ['i', 'VI', 'III', 'VII'],
+    ('pop', 'triste', 'minor'): [
+        ['i', 'VI', 'III', 'VII'], 
+        ['vi', 'IV', 'I', 'V']
+    ], # vi est traité comme i en mineur relatif
+    # --- JAZZ ---
+    ('jazz', 'calme', 'major'): [
+        ['ii7', 'V7', 'I7', 'I7'], 
+        ['I7', 'vi', 'ii7', 'V7']
     ],
-    ('jazz', 'calme'): [
-        ['ii7', 'V7', 'I7', 'I7'],
-        ['I7', 'vi', 'ii7', 'V7'],
+    ('jazz', 'triste', 'minor'): [
+        ['ii°7', 'V7', 'i7', 'i7'], 
+        ['i7', 'iv7', 'V7', 'i7']
     ],
-    ('jazz', 'triste'): [
-        ['ii°7', 'V7', 'i7', 'i7'],
-        ['i7', 'iv7', 'V7', 'i7'],
-    ],
-    ('blues', 'triste'): [
+    # --- BLUES ---
+    ('blues', 'triste', 'minor'): [
         ['i', 'iv', 'i', 'V7'], 
         ['i7', 'iv7', 'v7', 'i7']
     ],
-    ('blues', 'joyeux'): [
+    ('blues', 'joyeux', 'major'): [
         ['I', 'IV', 'I', 'V'], 
         ['I7', 'IV7', 'I7', 'V7']
     ],
-    ('latin', 'energique'): [
-        ['i', 'iv', 'V', 'i'], 
-        ['i', 'VII', 'VI', 'V']
+    # --- ROCK ---
+    ('rock', 'energique', 'major'): [
+        ['I', 'IV', 'vi', 'V']
     ],
-    ('latin', 'calme'): [
-        ['I', 'vi', 'ii', 'V'], 
-        ['i7', 'iv7', 'V7', 'i7']
-    ],
-    ('rock', 'energique'): [
-        ['I', 'IV', 'vi', 'V'], 
+    ('rock', 'energique', 'minor'): [
         ['i', 'VI', 'III', 'VII']
     ],
-    ('rock', 'triste'): [
-        ['vi', 'IV', 'I', 'V'], 
-        ['i', 'VI', 'iv', 'V']
-    ],
-    ('gospel', 'joyeux'): [
-        ['I', 'IV', 'I', 'V'], 
-        ['I', 'I7', 'IV', 'iv']
-    ],
-    ('gospel', 'calme'): [
-        ['I', 'vi', 'ii', 'V'], 
-        ['I', 'V', 'vi', 'IV']
-    ],
-    ('cinematique', 'triste'): [
-        ['i', 'VI', 'iv', 'V'], 
-        ['i', 'v', 'VI', 'VII']
-    ],
-    ('cinematique', 'energique'): [
+    # --- CINÉMATIQUE ---
+    ('cinematique', 'energique', 'minor'): [
         ['i', 'VI', 'III', 'VII'], 
         ['i', 'iv', 'VII', 'III']
     ],
+    # L'équivalent majeur de l'épique, souvent utilisé dans les thèmes de triomphe (ex: Avengers)
+    ('cinematique', 'energique', 'major'): [
+        ['I', 'V', 'vi', 'IV'], 
+        ['I', 'bVII', 'IV', 'I']
+    ], 
+    ('cinematique', 'triste', 'minor'): [
+        ['i', 'VI', 'iv', 'V']
+    ],
+    ('cinematique', 'calme', 'major'): [
+        ['I', 'IV', 'I', 'IV']
+    ],
 }
 
-
 def get_progression(genre: str, emotion: str, mode: str) -> list[str]:
-    key = (genre, emotion)
+    key = (genre, emotion, mode)
     if key in PROGRESSIONS:
         return random.choice(PROGRESSIONS[key])
 
-    # Repli 1 : Rechercher une progression du même genre
-    same_genre_keys = [k for k in PROGRESSIONS if k[0] == genre]
-    if same_genre_keys:
-        return random.choice(PROGRESSIONS[random.choice(same_genre_keys)])
+    # Repli 1 : Rechercher une progression du même genre et même mode
+    same_genre_mode = [k for k in PROGRESSIONS if k[0] == genre and k[2] == mode]
+    if same_genre_mode:
+        return random.choice(PROGRESSIONS[random.choice(same_genre_mode)])
 
-    # Repli 2 : Par mode
-    fallback_key = ('classique', 'triste') if mode == 'minor' else ('classique', 'joyeux')
+    # Repli 2 : Par mode uniquement
+    fallback_key = ('classique', 'triste', 'minor') if mode == 'minor' else ('classique', 'joyeux', 'major')
     return random.choice(PROGRESSIONS[fallback_key])
