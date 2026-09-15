@@ -21,14 +21,86 @@ ACCOMPANIMENT_PATTERNS = {
 }
 
 GENRE_SETTINGS = {
-    'classique': {'pattern': 'alberti_bass', 'chorus_pattern': 'arpeggio_8th', 'swing_ratio': 0.5, 'passing_chords': False, 'blue_notes': False},
-    'pop': {'pattern': 'pop_ballad', 'chorus_pattern': 'bass_chord', 'swing_ratio': 0.5, 'passing_chords': False, 'blue_notes': False},
-    'jazz': {'pattern': 'swing_comping', 'chorus_pattern': 'walking_bass', 'swing_ratio': 0.66, 'passing_chords': True, 'blue_notes': True},
-    'blues': {'pattern': 'blues_shuffle', 'chorus_pattern': 'blues_shuffle', 'swing_ratio': 0.66, 'passing_chords': True, 'blue_notes': True},
-    'latin': {'pattern': 'latin_clave', 'chorus_pattern': 'latin_clave', 'swing_ratio': 0.5, 'passing_chords': True, 'blue_notes': False},
-    'rock': {'pattern': 'power_chords', 'chorus_pattern': 'power_chords', 'swing_ratio': 0.5, 'passing_chords': False, 'blue_notes': True},
-    'gospel': {'pattern': 'gospel_block', 'chorus_pattern': 'walking_bass', 'swing_ratio': 0.6, 'passing_chords': True, 'blue_notes': True},
-    'cinematique': {'pattern': 'arpeggio_8th', 'chorus_pattern': 'block', 'swing_ratio': 0.5, 'passing_chords': False, 'blue_notes': False},
+    'classique': {
+        'pattern': 'alberti_bass', 
+        'chorus_pattern': 'arpeggio_8th', 
+        'swing_ratio': 0.5, 
+        'passing_chords': False, 
+        'blue_notes': False, 
+        'voicing': 'spread', 
+        'chord_extension_prob': 0.05, 
+        'melody_chromaticism': 0.03
+    },
+    'pop': {
+        'pattern': 'pop_ballad', 
+        'chorus_pattern': 'bass_chord', 
+        'swing_ratio': 0.5, 
+        'passing_chords': False, 
+        'blue_notes': False, 
+        'voicing': 'closed', 
+        'chord_extension_prob': 0.15, 
+        'melody_chromaticism': 0.04
+    },
+    'jazz': {
+        'pattern': 'swing_comping', 
+        'chorus_pattern': 'walking_bass', 
+        'swing_ratio': 0.66, 
+        'passing_chords': True, 
+        'blue_notes': True, 
+        'voicing': 'drop2', 
+        'chord_extension_prob': 0.60, 
+        'melody_chromaticism': 0.18
+    },
+    'blues': {
+        'pattern': 'blues_shuffle', 
+        'chorus_pattern': 'blues_shuffle', 
+        'swing_ratio': 0.66, 
+        'passing_chords': True, 
+        'blue_notes': True, 
+        'voicing': 'drop2', 
+        'chord_extension_prob': 0.50, 
+        'melody_chromaticism': 0.25
+    },
+    'latin': {
+        'pattern': 'latin_clave', 
+        'chorus_pattern': 'latin_clave', 
+        'swing_ratio': 0.5, 
+        'passing_chords': True, 
+        'blue_notes': False, 
+        'voicing': 'closed', 
+        'chord_extension_prob': 0.30, 
+        'melody_chromaticism': 0.10
+    },
+    'rock': {
+        'pattern': 'power_chords', 
+        'chorus_pattern': 'power_chords', 
+        'swing_ratio': 0.5, 
+        'passing_chords': False, 
+        'blue_notes': True, 
+        'voicing': 'closed', 
+        'chord_extension_prob': 0.05, 
+        'melody_chromaticism': 0.04
+    },
+    'gospel': {
+        'pattern': 'gospel_block', 
+        'chorus_pattern': 'walking_bass', 
+        'swing_ratio': 0.6, 
+        'passing_chords': True, 
+        'blue_notes': True, 
+        'voicing': 'spread', 
+        'chord_extension_prob': 0.40, 
+        'melody_chromaticism': 0.15
+    },
+    'cinematique': {
+        'pattern': 'arpeggio_8th', 
+        'chorus_pattern': 'block', 
+        'swing_ratio': 0.5, 
+        'passing_chords': False, 
+        'blue_notes': False, 
+        'voicing': 'spread', 
+        'chord_extension_prob': 0.25, 
+        'melody_chromaticism': 0.05
+    },
 }
 
 def get_genre_settings(genre: str) -> dict:

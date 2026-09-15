@@ -8,71 +8,35 @@ import random
 
 PROGRESSIONS = {
     # --- CLASSIQUE ---
-    ('classique', 'triste', 'minor'): [
-        ['i', 'iv', 'V', 'i'], 
-        ['i', 'VI', 'III', 'VII']
-    ],
-    ('classique', 'triste', 'major'): [
-        ['vi', 'iii', 'IV', 'V']
-    ], # Tristesse relative en majeur
-    ('classique', 'joyeux', 'major'): [
-        ['I', 'IV', 'V', 'I'], 
-        ['I', 'vi', 'IV', 'V']
-    ],
-    ('classique', 'calme', 'major'): [
-        ['I', 'iii', 'IV', 'I'], 
-        ['I', 'vi', 'ii', 'V']
-    ],
+    ('classique', 'triste', 'minor'): [['i', 'iv', 'V', 'i'], ['i', 'VI', 'III', 'VII'], ['i', 'iv', 'vii°7', 'V']],
+    ('classique', 'triste', 'major'): [['vi', 'iii', 'IV', 'V']],
+    ('classique', 'joyeux', 'major'): [['I', 'IV', 'V', 'I'], ['I', 'vi', 'IV', 'V']],
+    ('classique', 'calme', 'major'): [['I', 'iii', 'IV', 'I'], ['I', 'vi', 'ii', 'V']],
+    
     # --- POP ---
-    ('pop', 'joyeux', 'major'): [
-        ['I', 'V', 'vi', 'IV'], 
-        ['I', 'IV', 'V', 'I']
-    ],
-    ('pop', 'triste', 'minor'): [
-        ['i', 'VI', 'III', 'VII'], 
-        ['vi', 'IV', 'I', 'V']
-    ], # vi est traité comme i en mineur relatif
-    # --- JAZZ ---
-    ('jazz', 'calme', 'major'): [
-        ['ii7', 'V7', 'I7', 'I7'], 
-        ['I7', 'vi', 'ii7', 'V7']
-    ],
-    ('jazz', 'triste', 'minor'): [
-        ['ii°7', 'V7', 'i7', 'i7'], 
-        ['i7', 'iv7', 'V7', 'i7']
-    ],
+    ('pop', 'joyeux', 'major'): [['I', 'V', 'vi', 'IV'], ['I', 'IV', 'V', 'I']],
+    ('pop', 'triste', 'minor'): [['i', 'VI', 'III', 'VII'], ['vi', 'IV', 'I', 'V']],
+    
+    # --- JAZZ (Turnarounds réels avec dominantes secondaires) ---
+    ('jazz', 'calme', 'major'): [['ii7', 'V7', 'I7', 'VI7'], ['I7', 'VI7', 'ii7', 'V7']],
+    ('jazz', 'joyeux', 'major'): [['I7', 'VI7', 'ii7', 'V7'], ['vi', 'II7', 'ii7', 'V7']],
+    ('jazz', 'triste', 'minor'): [['i7', 'iv7', 'ii°7', 'V7'], ['i7', 'VI7', 'ii°7', 'V7']],
+    ('jazz', 'energique', 'major'): [['I7', 'VI7', 'ii7', 'V7'], ['ii7', 'V7', 'I7', 'IV7']],
+    
     # --- BLUES ---
-    ('blues', 'triste', 'minor'): [
-        ['i', 'iv', 'i', 'V7'], 
-        ['i7', 'iv7', 'v7', 'i7']
-    ],
-    ('blues', 'joyeux', 'major'): [
-        ['I', 'IV', 'I', 'V'], 
-        ['I7', 'IV7', 'I7', 'V7']
-    ],
+    ('blues', 'triste', 'minor'): [['Iblues7', 'IVblues7', 'Iblues7', 'V7']],
+    ('blues', 'joyeux', 'major'): [['Iblues7', 'IVblues7', 'V7', 'IVblues7']],
+    ('blues', 'energique', 'major'): [['Iblues7', 'IVblues7', 'Iblues7', 'V7']],
+    
     # --- ROCK ---
-    ('rock', 'energique', 'major'): [
-        ['I', 'IV', 'vi', 'V']
-    ],
-    ('rock', 'energique', 'minor'): [
-        ['i', 'VI', 'III', 'VII']
-    ],
+    ('rock', 'energique', 'major'): [['I', 'IV', 'vi', 'V']],
+    ('rock', 'energique', 'minor'): [['i', 'VI', 'III', 'VII']],
+    
     # --- CINÉMATIQUE ---
-    ('cinematique', 'energique', 'minor'): [
-        ['i', 'VI', 'III', 'VII'], 
-        ['i', 'iv', 'VII', 'III']
-    ],
-    # L'équivalent majeur de l'épique, souvent utilisé dans les thèmes de triomphe (ex: Avengers)
-    ('cinematique', 'energique', 'major'): [
-        ['I', 'V', 'vi', 'IV'], 
-        ['I', 'bVII', 'IV', 'I']
-    ], 
-    ('cinematique', 'triste', 'minor'): [
-        ['i', 'VI', 'iv', 'V']
-    ],
-    ('cinematique', 'calme', 'major'): [
-        ['I', 'IV', 'I', 'IV']
-    ],
+    ('cinematique', 'energique', 'minor'): [['i', 'VI', 'III', 'VII'], ['i', 'iv', 'VII', 'III']],
+    ('cinematique', 'energique', 'major'): [['I', 'V', 'vi', 'IV'], ['I', 'bVII', 'IV', 'I']],
+    ('cinematique', 'triste', 'minor'): [['i', 'VI', 'iv', 'V']],
+    ('cinematique', 'calme', 'major'): [['I', 'IV', 'I', 'IV']],
 }
 
 def get_progression(genre: str, emotion: str, mode: str) -> list[str]:

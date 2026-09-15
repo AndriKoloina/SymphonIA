@@ -12,11 +12,12 @@ import random
 # from emotion_params import get_params
 # from melody_generator import generate_melody, generate_accompaniment
 
-from theory import roman_to_chord, apply_voice_leading
+from theory import roman_to_chord, apply_voice_leading, apply_voicing_style
 from chord_library import get_progression
 from emotion_params import get_params
 from genre_styles import get_genre_settings
 from melody_generator import generate_melody, generate_accompaniment
+# from voicing_engine import build_progression_voicing
 
 # CHORUS_PATTERNS = {
 #     'pop_ballad': 'arpeggio_8th',
@@ -277,11 +278,22 @@ def compose(genre: str, emotion: str, key: str = 'C', mode: str = 'minor',
     progression_romans = get_progression(genre, emotion, mode)
     base_romans = (progression_romans * 4)[:4]
 
-    chords_midi = [roman_to_chord(r, key, mode) for r in base_romans]
-    chords_midi = apply_voice_leading(chords_midi)
+    # chords_midi = [roman_to_chord(r, key, mode) for r in base_romans]
+    # chords_midi = apply_voice_leading(chords_midi)
+    ext_prob = genre_settings.get('chord_extension_prob', 0.1)
+    voicing_style = genre_settings.get('voicing', 'closed')
 
-    trans_roman = 'V'
-    trans_chord_midi = roman_to_chord(trans_roman, key, mode)
+    # 1. Génération avec probabilité d'extensions
+    raw_chords_midi = [roman_to_chord(r, key, mode, extension_prob=ext_prob) for r in base_romans]
+    
+    # 2. Ton excellent voice leading qui protège la basse
+    chords_midi = apply_voice_leading(raw_chords_midi)
+    
+    # 3. La mise en forme spatiale (Drop 2, Spread)
+    chords_midi = apply_voicing_style(chords_midi, style=voicing_style)
+
+    # trans_roman = 'V'
+    # trans_chord_midi = roman_to_chord(trans_roman, key, mode)
 
     # Transmission des drapeaux de théorie musicale
     flags = {

@@ -5,6 +5,7 @@ Moteur de théorie musicale : gammes, tonalités, et construction d'accords
 C'est le socle "règles" du système hybride : pas de ML ici, uniquement
 de la théorie musicale encodée en dur.
 """
+import random
 
 NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
@@ -29,8 +30,24 @@ CHORD_INTERVALS = {
     'dom7':  [0, 4, 7, 10],
     'maj7':  [0, 4, 7, 11],
     'min7':  [0, 3, 7, 10],
-    'm7b5':  [0, 3, 6, 10],  # Demi-diminué
+    'm7b5':  [0, 3, 6, 10],
     'dim7':  [0, 3, 6, 9],
+    # --- NOUVELLES EXTENSIONS (Jazz/Blues) ---
+    'dom9':  [0, 4, 7, 10, 14],
+    'maj9':  [0, 4, 7, 11, 14],
+    'min9':  [0, 3, 7, 10, 14],
+    'six':   [0, 4, 7, 9],
+    'm6':    [0, 3, 7, 9],
+    'sus4':  [0, 5, 7],
+}
+
+# --- NOUVEAU : Dictionnaire pour transformer les accords simples en accords riches ---
+EXTENSION_UPGRADES = {
+    'dom7': 'dom9',
+    'maj7': 'maj9',
+    'min7': 'min9',
+    'maj':  'six',
+    'min':  'm6',
 }
 
 # chiffrage romain -> (degré de la gamme (0-indexé), qualité de l'accord)
@@ -38,16 +55,20 @@ ROMAN_MAJOR = {
     'I': (0, 'maj'), 'ii': (1, 'min'), 'iii': (2, 'min'), 'IV': (3, 'maj'),
     'V': (4, 'maj'), 'V7': (4, 'dom7'), 'vi': (5, 'min'), 'vii°': (6, 'dim'),
     'ii7': (1, 'min7'), 'IV7': (3, 'maj7'), 'I7': (0, 'maj7'),
-    # Accords empruntés au mode mineur
     'i': (0, 'min'), 'iv': (3, 'min'), 'VI': (5, 'maj'), 'VII': (6, 'maj'), 'i7': (0, 'min7'),
+    # --- NOUVEAUX : Dominantes secondaires et blues ---
+    'VI7': (5, 'dom7'), 'III7': (2, 'dom7'), 'II7': (1, 'dom7'), 'VII7': (6, 'dom7'), 'vii°7': (6, 'dim7'),
+    'Iblues7': (0, 'dom7'), 'IVblues7': (3, 'dom7'),
 }
 
 ROMAN_MINOR = {
     'i': (0, 'min'), 'ii°': (1, 'dim'), 'III': (2, 'maj'), 'iv': (3, 'min'),
     'v': (4, 'min'), 'V': (4, 'maj'), 'V7': (4, 'dom7'), 'VI': (5, 'maj'),
     'VII': (6, 'maj'), 'i7': (0, 'min7'), 'iv7': (3, 'min7'), 'ii°7': (1, 'm7b5'),
-    # Accords empruntés au mode majeur (Tierce picarde, IV majeur, etc.)
     'I': (0, 'maj'), 'IV': (3, 'maj'), 'ii': (1, 'min'), 'vi': (5, 'min'), 'I7': (0, 'maj7'),
+    # --- NOUVEAUX : Dominantes secondaires et blues ---
+    'VI7': (5, 'dom7'), 'III7': (2, 'dom7'), 'II7': (1, 'dom7'), 'VII7': (6, 'dom7'), 'vii°7': (6, 'dim7'),
+    'Iblues7': (0, 'dom7'), 'IVblues7': (3, 'dom7'),
 }
 
 
@@ -64,11 +85,11 @@ def scale_notes(root_note: str, scale_type: str, octave: int = 4) -> list[int]:
     return [root_midi + interval for interval in SCALES[scale_type]]
 
 
-def roman_to_chord(roman: str, key_root: str, mode: str, octave: int = 4) -> list[int]:
-    """Convertit un chiffrage romain en liste de notes MIDI (l'accord empilé)."""
+def roman_to_chord(roman: str, key_root: str, mode: str, octave: int = 4, extension_prob: float = 0.0) -> list[int]:
+    """Convertit un chiffrage romain en liste de notes MIDI avec enrichissement probabiliste."""
     table = ROMAN_MAJOR if mode == 'major' else ROMAN_MINOR
     
-    # Repli intelligent : si l'accord n'est pas dans la table du mode, on cherche dans l'autre
+    # Repli intelligent
     if roman not in table:
         fallback_table = ROMAN_MINOR if mode == 'major' else ROMAN_MAJOR
         if roman in fallback_table:
@@ -78,7 +99,10 @@ def roman_to_chord(roman: str, key_root: str, mode: str, octave: int = 4) -> lis
 
     degree, quality = table[roman]
 
-    # En mineur, on utilise la gamme mineure harmonique pour avoir un V majeur juste
+    # --- NOUVEAU : Application des extensions (ex: dom7 devient dom9) ---
+    if quality in EXTENSION_UPGRADES and random.random() < extension_prob:
+        quality = EXTENSION_UPGRADES[quality]
+
     scale_type = 'major' if mode == 'major' else 'harmonic_minor'
     scale = scale_notes(key_root, scale_type, octave)
 
@@ -144,3 +168,23 @@ def apply_voice_leading(chords_midi: list[list[int]]) -> list[list[int]]:
         voiced.append(sorted(new_chord))
         
     return voiced
+
+def apply_voicing_style(chords_midi: list[list[int]], style: str = 'closed') -> list[list[int]]:
+    """Applique une texture spatiale (Drop 2, Spread) après le voice leading."""
+    styled_chords = []
+    for chord in chords_midi:
+        chord_sorted = sorted(chord)
+        if style == 'drop2' and len(chord_sorted) >= 3:
+            # Descend la 2ème note la plus haute d'une octave (typique Jazz)
+            dropped = chord_sorted.copy()
+            dropped[-2] -= 12
+            styled_chords.append(sorted(dropped))
+        elif style == 'spread' and len(chord_sorted) >= 3:
+            # Ecarte les voix supérieures (typique Classique/Cinématique)
+            root = chord_sorted[0]
+            upper = [p + 12 for p in chord_sorted[1:]]
+            styled_chords.append(sorted([root] + upper))
+        else:
+            styled_chords.append(chord_sorted) # 'closed' par défaut
+            
+    return styled_chords
