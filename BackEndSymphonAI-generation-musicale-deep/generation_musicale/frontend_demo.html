@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Démo Piano Génératif</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; text-align: center; }
+  #controls { margin: 20px; }
+  select, button, input { padding: 6px; margin: 4px; }
+  #waterfall { background: #000; display: block; margin: 20px auto; border: 1px solid #444; }
+</style>
+</head>
+<body>
+  <h2>Démo — Piano génératif (backend Python + FastAPI)</h2>
+
+  <div id="controls">
+    <select id="genre">
+      <option value="classique">Classique</option>
+      <option value="pop">Pop</option>
+      <option value="jazz">Jazz</option>
+    </select>
+    <select id="emotion">
+      <option value="triste">Triste</option>
+      <option value="joyeux">Joyeux</option>
+      <option value="calme">Calme</option>
+      <option value="energique">Énergique</option>
+    </select>
+    <select id="mode">
+      <option value="minor">Mineur</option>
+      <option value="major">Majeur</option>
+    </select>
+    <select id="key">
+      <option value="C">C</option>
+      <option value="C#">C#/Db</option>
+      <option value="D">D</option>
+      <option value="Eb">D#/Eb</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+      <option value="F#">F#/Gb</option>
+      <option value="G">G</option>
+      <option value="Ab">G#/Ab</option>
+      <option value="A">A</option>
+      <option value="Bb">A#/Bb</option>
+      <option value="B">B</option>
+    </select>
+    <input id="measures" type="number" value="4" min="1" max="16" style="width: 50px;">
+    <button onclick="generateAndPlay()">Générer et jouer</button>
+  </div>
+
+  <canvas id="waterfall" width="900" height="400"></canvas>
+
+<script>
+const API_URL = "http://localhost:8000/generate";
+const canvas = document.getElementById("waterfall");
+const ctx = canvas.getContext("2d");
+
+// Configuration du synthétiseur avec une enveloppe adaptée au piano
+const synth = new Tone.PolySynth(Tone.Synth, {
+  oscillator: { type: "triangle" },
+  envelope: {
+    attack: 0.005,
+    decay: 1.2,
+    sustain: 0.1,
+    release: 0.4
+  }
+}).toDestination();
+
+let animationFrameId = null;
+
+function midiToFreq(midi) {
+  return 440 * Math.pow(2, (midi - 69) / 12);
+}
+
+async function generateAndPlay() {
+  // 1. Initialisation du contexte audio lors du clic utilisateur
+  await Tone.start();
+
+  // 2. Réinitialisation des planifications et de l'animation précédentes
+  Tone.Transport.stop();
+  Tone.Transport.cancel();
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+
+  // Réinitialisation du release de la pédale
+  synth.set({ envelope: { release: 0.4 } });
+
+  // 3. Récupération des paramètres du formulaire
+  const body = {
+    genre: document.getElementById("genre").value,
+    emotion: document.getElementById("emotion").value,
+    mode: document.getElementById("mode").value,
+    key: document.getElementById("key").value,
+    measures: parseInt(document.getElementById("measures").value),
+  };
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      console.error("Erreur serveur :", res.status);
+      return;
+    }
+
+    const data = await res.json();
+    console.log("Données reçues du backend :", data);
+
+    // --- 4. Gestion de la Pédale de Sustain (Control Change 64) ---
+    if (data.sustain_events && data.sustain_events.length > 0) {
+      data.sustain_events.forEach(event => {
+        Tone.Transport.schedule(time => {
+          if (event.value > 0) {
+            // Pédale enfoncée : résonance prolongée (Sustain active)
+            synth.set({ envelope: { release: 2.5 } });
+          } else {
+            // Pédale relâchée : retour à l'étouffement naturel (Sustain coupee)
+            synth.set({ envelope: { release: 0.4 } });
+          }
+        }, event.time);
+      });
+    }
+
+    // --- 5. Planification des Notes Audio ---
+    if (data.notes && data.notes.length > 0) {
+      data.notes.forEach(note => {
+        Tone.Transport.schedule(time => {
+          const freq = midiToFreq(note.pitch);
+          const velocityNormalized = note.velocity ? note.velocity / 127 : 0.8;
+          
+          synth.triggerAttackRelease(
+            freq,
+            note.duration,
+            time,
+            velocityNormalized
+          );
+        }, note.start_time);
+      });
+    }
+
+    // --- 6. Démarrage du visuel Waterfall et de l'audio ---
+    const totalDuration = data.metadata ? data.metadata.total_duration_seconds : 10;
+    drawWaterfall(data.notes || [], totalDuration);
+
+    Tone.Transport.start();
+
+  } catch (error) {
+    console.error("Erreur de communication avec l'API :", error);
+  }
+}
+
+function drawWaterfall(notes, totalDuration) {
+  const minPitch = 48, maxPitch = 84; // Plage de tessiture affichée à l'écran
+  const pxPerSecond = canvas.height / totalDuration;
+  let startTime = performance.now();
+
+  function frame() {
+    const elapsed = (performance.now() - startTime) / 1000;
+    
+    // Nettoyage du canvas à chaque frame
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    notes.forEach(note => {
+      const x = ((note.pitch - minPitch) / (maxPitch - minPitch)) * canvas.width;
+      const yStart = canvas.height - (note.start_time - elapsed) * pxPerSecond;
+      const h = note.duration * pxPerSecond;
+
+      // Distinction de couleur : Main droite (Bleu) / Main gauche (Orange)
+      ctx.fillStyle = note.hand === "right" ? "#4fc3f7" : "#ffb74d";
+      ctx.fillRect(x, yStart - h, 18, h);
+    });
+
+    if (elapsed < totalDuration + 0.5) {
+      animationFrameId = requestAnimationFrame(frame);
+    }
+  }
+  
+  animationFrameId = requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
